@@ -1,0 +1,39 @@
+{
+	"name"			: "ipub/permission",
+	"type"			: "library",
+	"description"	: "Simple permission checker for Nette Framework",
+	"keywords"		: ["nette", "permission", "acl", "tools"],
+	"homepage"		: "https://github.com/iPublikuj/gravatar.git",
+	"license"		: ["BSD-3-Clause", "GPL-2.0", "GPL-3.0"],
+
+	"authors"		: [
+		{
+			"name"		: "Adam Kadlec",
+			"homepage"	: "http://www.ipublikuj.eu/"
+		}
+	],
+
+	"support": {
+		"email"		:"support@ipublikuj.eu",
+		"issues"	:"https://github.com/iPublikuj/Permission/issues"
+	},
+
+	"require": {
+		"php"				: ">=5.4",
+		"nette/application"	: "~2.2",
+		"nette/di"			: "~2.2",
+		"nette/utils"		: "~2.2",
+		"latte/latte"		: "~2.2"
+	},
+
+	"require-dev": {
+		"nette/tester"		: "@dev",
+		"janmarek/mockista"	: "@dev"
+	},
+
+	"autoload": {
+		"psr-0": {
+			"IPub\\Permission\\": "src/"
+		}
+	}
+}
