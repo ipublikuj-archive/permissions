@@ -1,4 +1,4 @@
-# Permission
+# Permissions
 
 Simple ACL checker for [Nette Framework](http://nette.org/)
 
@@ -10,7 +10,7 @@ The best way to install ipub/permission is using  [Composer](http://getcomposer.
 ```json
 {
 	"require": {
-		"ipub/permission": "dev-master"
+		"ipub/permissions": "dev-master"
 	}
 }
 ```
@@ -19,7 +19,7 @@ or
 
 
 ```sh
-$ composer require ipub/permission:@dev
+$ composer require ipub/permissions:@dev
 ```
 
 After that you have to register extension in config.neon.

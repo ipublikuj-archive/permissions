@@ -1,5 +1,5 @@
 {
-	"name"			: "ipub/permission",
+	"name"			: "ipub/permissions",
 	"type"			: "library",
 	"description"	: "Simple permission checker for Nette Framework",
 	"keywords"		: ["nette", "permission", "acl", "tools"],
@@ -15,7 +15,7 @@
 
 	"support": {
 		"email"		:"support@ipublikuj.eu",
-		"issues"	:"https://github.com/iPublikuj/Permission/issues"
+		"issues"	:"https://github.com/iPublikuj/Permissions/issues"
 	},
 
 	"require": {
@@ -33,7 +33,7 @@
 
 	"autoload": {
 		"psr-0": {
-			"IPub\\Permission\\": "src/"
+			"IPub\\Permissions\\": "src/"
 		}
 	}
 }
