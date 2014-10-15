@@ -120,7 +120,7 @@ class Permission extends NS\Permission implements NS\IAuthorizator
 		foreach ($this->roles as $role) {
 			// Allow all privileges for administrator
 			if ($role->isAdministrator()) {
-				$this->allow($role->getKeyName(), $resource, $privilege);
+				$this->allow($role->getKeyName(), self::ALL, self::ALL);
 
 			// For others apply setup privileges
 			} else {
