@@ -47,11 +47,6 @@ class Permission extends NS\Permission implements NS\IAuthorizator
 	protected $roles = [];
 
 	/**
-	 * @var Access\IChecker
-	 */
-	protected $accessCheckers = [];
-
-	/**
 	 * @param Models\IRolesModel $rolesModel
 	 */
 	public function __construct(
@@ -136,5 +131,15 @@ class Permission extends NS\Permission implements NS\IAuthorizator
 		}
 
 		return $this;
+	}
+
+	/**
+	 * Get all registered permissions
+	 *
+	 * @return Entities\IPermission[]
+	 */
+	public function getPermissions()
+	{
+		return $this->permissions;
 	}
 }

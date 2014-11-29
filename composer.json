@@ -3,7 +3,7 @@
 	"type"			: "library",
 	"description"	: "Simple permission checker for Nette Framework",
 	"keywords"		: ["nette", "permission", "acl", "tools"],
-	"homepage"		: "https://github.com/iPublikuj/gravatar.git",
+	"homepage"		: "https://github.com/iPublikuj/permissions.git",
 	"license"		: ["BSD-3-Clause", "GPL-2.0", "GPL-3.0"],
 
 	"authors"		: [
@@ -15,7 +15,7 @@
 
 	"support": {
 		"email"		:"support@ipublikuj.eu",
-		"issues"	:"https://github.com/iPublikuj/Permissions/issues"
+		"issues"	:"https://github.com/iPublikuj/permissions/issues"
 	},
 
 	"require": {
