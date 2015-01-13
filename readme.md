@@ -4,7 +4,7 @@ Simple ACL checker for [Nette Framework](http://nette.org/)
 
 ## Instalation
 
-The best way to install ipub/permission is using  [Composer](http://getcomposer.org/):
+The best way to install ipub/permissions is using  [Composer](http://getcomposer.org/):
 
 
 ```json
@@ -26,7 +26,7 @@ After that you have to register extension in config.neon.
 
 ```neon
 extensions:
-	permission: IPub\Permission\DI\PermissionExtension
+	permission: IPub\Permissions\DI\PermissionsExtension
 ```
 
 Package contains trait, which you will have to use in presenter to override default **checkRequirements** method. This works only for PHP 5.3+, for older version you can simply copy trait content and paste it into class where you want to use it.
@@ -37,7 +37,7 @@ Package contains trait, which you will have to use in presenter to override defa
 class BasePresenter extends Nette\Application\UI\Presenter
 {
 
-	use IPub\Permission\TPermission;
+	use IPub\Permissions\TPermission;
 
 }
 ```
@@ -102,11 +102,11 @@ class BasePresenter extends Nette\Application\UI\Presenter
 }
 ```
 
-In the variable **$permission** can be string with special delimiter (:), something like this:  'NameOfResource: NameOfPrivilege' or it could be an array which contain two keys - resource and privilege or it could be an object which implement IPub\Permissions\Entities\IPermission
+In the variable **$permission** can be string with special delimiter (:), something like this:  'NameOfResource:NameOfPrivilege' or it could be an array which contain two keys - resource and privilege or it could be an object which implement IPub\Permissions\Entities\IPermission
 
 ### Connecting roles & resources & privileges
 
-Each role has to contain special method **hasPermission**. If you create a call on your role $role->hasPermission('NameOfResource: NameOfPrivilege') and it returns TRUE, that means this role has access to this resource and privilege, in other case not. So permission service create this connection automatically when you create resource and privilege.
+Each role has to contain special method **hasPermission**. If you create a call on your role $role->hasPermission('NameOfResource:NameOfPrivilege') and it returns TRUE, that means this role has access to this resource and privilege, in other case not. So permission service create this connection automatically when you create resource and privilege.
 
 ## Usage
 
@@ -188,7 +188,7 @@ In latte you can use two special macros.
 
 Macro **ifAllowed** is very similar to annotations definition. You can use here one or all of available parameters: user, resource, privilege, permission or role.
 
-This mascro can be also used as **n:** macro:
+This macro can be also used as **n:** macro:
 
 ```html
 <div class="some class">
