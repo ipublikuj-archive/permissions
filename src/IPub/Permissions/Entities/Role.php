@@ -189,7 +189,7 @@ class Role extends Nette\Object implements IRole
 	 */
 	public function hasPermission($permission)
 	{
-		return in_array($permission, $this->permissions);
+		return in_array((string) $permission, $this->permissions);
 	}
 
 	/**
