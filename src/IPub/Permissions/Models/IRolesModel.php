@@ -14,4 +14,13 @@
 
 namespace IPub\Permissions\Models;
 
-interface IRolesModel {}
+use IPub;
+use IPub\Permissions;
+
+interface IRolesModel
+{
+	/**
+	 * @return Permissions\Entities\IRole[]
+	 */
+	public function findAll();
+}
