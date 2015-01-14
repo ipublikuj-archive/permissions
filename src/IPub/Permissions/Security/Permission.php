@@ -84,10 +84,18 @@ class Permission extends NS\Permission implements NS\IAuthorizator
 			$resource	= Utils\Strings::trim($permission['resource']);
 			$privilege	= Utils\Strings::trim($permission['privilege']);
 
+			// Convert it to string form
+			$permission = $resource . self::DELIMITER . $privilege;
+
 			// Store permission definition in object
 			$this->permissions[$permission] = new Entities\Permission($resource, $privilege, $details);
 
 		} else if ($permission instanceof Entities\IPermission) {
+			// Extract resource & privilege from permission
+			$resource	= $permission->getResource();
+			$privilege	= $permission->getPrivilege();
+
+			// Store permission definition in object
 			$this->permissions[(string) $permission] = $permission;
 
 		// Resource & privilege is in string with delimiter
@@ -98,6 +106,9 @@ class Permission extends NS\Permission implements NS\IAuthorizator
 			// Remove white spaces
 			$resource	= Utils\Strings::trim($resource);
 			$privilege	= Utils\Strings::trim($privilege);
+
+			// Convert it to string form
+			$permission = $resource . self::DELIMITER . $privilege;
 
 			// Store permission definition in object
 			$this->permissions[$permission] = new Entities\Permission($resource, $privilege, $details);
