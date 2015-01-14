@@ -1,0 +1,9 @@
+nette:
+	application:
+		mapping:
+			*: IPubTests\Permissions\*Presenter
+
+services:
+	# Test presenter
+ 	presenters.test:
+ 		class: IPubTests\Permissions\TestPresenter
