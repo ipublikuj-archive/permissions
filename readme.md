@@ -1,5 +1,9 @@
 # Permissions
 
+[![Build Status](https://img.shields.io/travis/iPublikuj/permissions.svg?style=flat-square)](https://travis-ci.org/iPublikuj/permissions)
+[![Latest Stable Version](https://img.shields.io/packagist/v/ipub/permissions.svg?style=flat-square)](https://packagist.org/packages/ipub/permissions)
+[![Composer Downloads](https://img.shields.io/packagist/dt/ipub/permissions.svg?style=flat-square)](https://packagist.org/packages/ipub/permissions)
+
 Simple ACL checker for [Nette Framework](http://nette.org/)
 
 ## Instalation
