@@ -27,7 +27,10 @@
 	},
 
 	"require-dev": {
+		"nette/mail"		: "~2.2",
+		"nette/safe-stream"	: "~2.2",
 		"nette/tester"		: "@dev",
+		"tracy/tracy"		: "@dev",
 		"janmarek/mockista"	: "@dev"
 	},
 
