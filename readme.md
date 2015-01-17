@@ -6,10 +6,9 @@
 
 Simple ACL checker for [Nette Framework](http://nette.org/)
 
-## Instalation
+## Installation
 
 The best way to install ipub/permissions is using  [Composer](http://getcomposer.org/):
-
 
 ```json
 {
@@ -20,7 +19,6 @@ The best way to install ipub/permissions is using  [Composer](http://getcomposer
 ```
 
 or
-
 
 ```sh
 $ composer require ipub/permissions:@dev
