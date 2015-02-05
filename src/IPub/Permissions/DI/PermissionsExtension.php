@@ -15,24 +15,10 @@
 namespace IPub\Permissions\DI;
 
 use Nette;
-use Nette\Configurator;
-use Nette\DI\Compiler;
+use Nette\DI;
 use Nette\PhpGenerator as Code;
 
-use IPub;
-
-if (!class_exists('Nette\DI\CompilerExtension')) {
-	class_alias('Nette\Config\CompilerExtension', 'Nette\DI\CompilerExtension');
-	class_alias('Nette\Config\Compiler', 'Nette\DI\Compiler');
-	class_alias('Nette\Config\Helpers', 'Nette\DI\Config\Helpers');
-}
-
-if (isset(Nette\Loaders\NetteLoader::getInstance()->renamed['Nette\Configurator']) || !class_exists('Nette\Configurator')) {
-	unset(Nette\Loaders\NetteLoader::getInstance()->renamed['Nette\Configurator']);
-	class_alias('Nette\Config\Configurator', 'Nette\Configurator');
-}
-
-class PermissionsExtension extends Nette\DI\CompilerExtension
+class PermissionsExtension extends DI\CompilerExtension
 {
 	public function loadConfiguration()
 	{
@@ -90,7 +76,7 @@ class PermissionsExtension extends Nette\DI\CompilerExtension
 	 */
 	public static function register(Nette\Configurator $config, $extensionName = 'permissions')
 	{
-		$config->onCompile[] = function (Configurator $config, Compiler $compiler) use ($extensionName) {
+		$config->onCompile[] = function (Nette\Configurator $config, Nette\DI\Compiler $compiler) use ($extensionName) {
 			$compiler->addExtension($extensionName, new PermissionsExtension());
 		};
 	}
