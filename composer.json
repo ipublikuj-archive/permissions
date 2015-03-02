@@ -29,6 +29,7 @@
 	"require-dev": {
 		"nette/bootstrap"	: "~2.2",
 		"nette/mail"		: "~2.2",
+		"nette/robot-loader"	: "~2.2",
 		"nette/safe-stream"	: "~2.2",
 		"nette/tester"		: "@dev",
 		"tracy/tracy"		: "@dev",
