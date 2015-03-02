@@ -39,14 +39,6 @@ class PermissionsExtension extends DI\CompilerExtension
 		// Link access checker
 		$builder->addDefinition($this->prefix('checkers.link'))
 			->setClass('IPub\Permissions\Access\LinkChecker');
-
-		// Install extension latte macros
-		$latteFactory = $builder->hasDefinition('nette.latteFactory')
-			? $builder->getDefinition('nette.latteFactory')
-			: $builder->getDefinition('nette.latte');
-
-		$latteFactory
-			->addSetup('IPub\Permissions\Latte\Macros::install(?->getCompiler())', array('@self'));
 	}
 
 	public function beforeCompile()
@@ -68,6 +60,12 @@ class PermissionsExtension extends DI\CompilerExtension
 				$service->addSetup('addPermission', array($permission, $details));
 			}
 		}
+		
+		// Install extension latte macros
+		$latteFactory = $builder->getDefinition($builder->getByType('\Nette\Bridges\ApplicationLatte\ILatteFactory') ?: 'nette.latteFactory');
+		
+		$latteFactory
+			->addSetup('IPub\Permissions\Latte\Macros::install(?->getCompiler())', array('@self'));
 	}
 
 	/**
