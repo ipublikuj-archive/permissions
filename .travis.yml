@@ -1,7 +1,7 @@
 language: php
 
 env:
-  - NETTE=~2.2.7
+  - NETTE=default
   - NETTE=~2.2.0
 
 php:
@@ -19,4 +19,8 @@ before_script:
   - composer self-update
   - composer install --no-interaction --prefer-source --dev
 
-script: ./vendor/bin/tester tests
+script:
+  - vendor/bin/tester -s -p php tests
+
+after_failure:
+  - 'for i in $(find ./tests -name \*.actual); do echo "--- $i"; cat $i; echo; echo; done'
