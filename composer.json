@@ -2,13 +2,14 @@
 	"name"			: "ipub/permissions",
 	"type"			: "library",
 	"description"	: "Simple permission checker for Nette Framework",
-	"keywords"		: ["nette", "permission", "acl", "tools"],
-	"homepage"		: "https://github.com/iPublikuj/permissions.git",
+	"keywords"		: ["nette", "permission", "acl", "tools", "ipub", "ipublikuj"],
+	"homepage"		: "https://github.com/iPublikuj/permissions",
 	"license"		: ["BSD-3-Clause", "GPL-2.0", "GPL-3.0"],
 
-	"authors"		: [
+	"authors": [
 		{
-			"name"		: "Adam Kadlec",
+			"name"		: "iPublikuj:cms",
+			"email"		: "info@ipublikuj.eu",
 			"homepage"	: "http://www.ipublikuj.eu/"
 		}
 	],

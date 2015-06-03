@@ -4,7 +4,7 @@
 [![Latest Stable Version](https://img.shields.io/packagist/v/ipub/permissions.svg?style=flat-square)](https://packagist.org/packages/ipub/permissions)
 [![Composer Downloads](https://img.shields.io/packagist/dt/ipub/permissions.svg?style=flat-square)](https://packagist.org/packages/ipub/permissions)
 
-Simple ACL checker for [Nette Framework](http://nette.org/)
+Simple permission checker for [Nette Framework](http://nette.org/)
 
 ## Installation
 
