@@ -31,7 +31,7 @@ class Role extends Nette\Object implements IRole
 	/**
 	 * @var array
 	 */
-	protected $children;
+	protected $children = [];
 
 	/**
 	 * @var string
@@ -81,7 +81,11 @@ class Role extends Nette\Object implements IRole
 	 */
 	public function setChildren($roles)
 	{
-		$this->children[] = $roles;
+		if (!is_array($roles)) {
+			throw new Nette\InvalidArgumentException('You must provide array of children');
+		}
+
+		$this->children = array_merge($this->children, $roles);
 
 		return $this;
 	}

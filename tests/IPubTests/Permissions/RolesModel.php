@@ -68,7 +68,7 @@ class RolesModel implements Permissions\Models\IRolesModel
 			->setKeyName('user-defined-role')
 			->setName('Registered in custom role')
 			->setPriority(0)
-			->setChildren($customChild)
+			->setChildren([$customChild])
 			->setPermissions([
 				'firstResourceName:firstPrivilegeName',
 				'thirdResourceName:thirdPrivilegeName'

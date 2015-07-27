@@ -63,6 +63,15 @@ class Permission extends NS\Permission implements NS\IAuthorizator
 
 			// & store role in object for future use
 			$this->roles[$role->getKeyName()] = $role;
+
+			$children = $role->getChildren();
+			if (!empty($children)) {
+				foreach ($children as $child) {
+					$child->setParent($role);
+					$this->removeRole($child->getKeyName());
+					$this->addRole($child->getKeyName(), $role->getKeyName());
+				}
+			}
 		}
 	}
 
