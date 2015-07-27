@@ -58,7 +58,8 @@ class Permission extends NS\Permission implements NS\IAuthorizator
 		// Register all available roles
 		foreach ($roles as $role) {
 			// Assign role to application permission checker
-			$this->addRole($role->getKeyName(), $role->getParent() ? $role->getParent()->getKeyName() : NULL);
+			$parent = $role->getParent();
+			$this->addRole($role->getKeyName(), ($parent) ? $parent->getKeyName() : NULL);
 
 			// & store role in object for future use
 			$this->roles[$role->getKeyName()] = $role;
