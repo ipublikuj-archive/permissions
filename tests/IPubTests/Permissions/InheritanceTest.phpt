@@ -66,7 +66,8 @@ class InheritanceTest extends Tester\TestCase
 		// Get permissions service
 		$this->permission = $dic->getService('permissions.permissions');
 
-		foreach ($this->dataValidPermissions() as list($permission, $details)) {
+		foreach ($this->dataValidPermissions() as $permission) {
+			list($permission, $details) = $permission;
 			$this->permission->addPermission($permission, $details);
 		}
 	}
