@@ -134,10 +134,6 @@ class Permission extends NS\Permission implements NS\IAuthorizator
 				// This combination role-resource-privilege is allowed
 				if ($role->hasPermission($permission)) {
 					$this->allow($role->getKeyName(), $resource, $privilege);
-
-				// This combination role-resource-privilege is not allowed
-				} else {
-					$this->deny($role->getKeyName(), $resource, $privilege);
 				}
 			}
 		}
