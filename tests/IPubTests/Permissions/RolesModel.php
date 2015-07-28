@@ -57,20 +57,39 @@ class RolesModel implements Permissions\Models\IRolesModel
 				'thirdResourceName:thirdPrivilegeName'
 			]);
 
+		$customChild = (new Permissions\Entities\Role)
+			->setKeyName('user-defined-child-role')
+			->setName('Registered in custom role as children of another role')
+			->setPriority(0)
+			->setPermissions([
+			]);
+
 		$custom = (new Permissions\Entities\Role)
 			->setKeyName('user-defined-role')
 			->setName('Registered in custom role')
 			->setPriority(0)
+			->setChildren([$customChild])
 			->setPermissions([
 				'firstResourceName:firstPrivilegeName',
 				'thirdResourceName:thirdPrivilegeName'
 			]);
 
+		$customInherited = (new Permissions\Entities\Role)
+			->setKeyName('user-defined-inherited-role')
+			->setName('Registered in custom role inheriting another role')
+			->setPriority(0)
+			->setParent($custom)
+			->setPermissions([
+			]);
+
+
 		return [
 			$guest,
 			$authenticated,
 			$administrator,
-			$custom
+			$customChild,
+			$custom,
+			$customInherited,
 		];
 	}
 }

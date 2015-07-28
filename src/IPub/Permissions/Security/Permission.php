@@ -58,10 +58,20 @@ class Permission extends NS\Permission implements NS\IAuthorizator
 		// Register all available roles
 		foreach ($roles as $role) {
 			// Assign role to application permission checker
-			$this->addRole($role->getKeyName(), $role->getParent() ? $role->getParent()->getKeyName() : NULL);
+			$parent = $role->getParent();
+			$this->addRole($role->getKeyName(), ($parent) ? $parent->getKeyName() : NULL);
 
 			// & store role in object for future use
 			$this->roles[$role->getKeyName()] = $role;
+
+			$children = $role->getChildren();
+			if (!empty($children)) {
+				foreach ($children as $child) {
+					$child->setParent($role);
+					$this->removeRole($child->getKeyName());
+					$this->addRole($child->getKeyName(), $role->getKeyName());
+				}
+			}
 		}
 	}
 
@@ -133,10 +143,6 @@ class Permission extends NS\Permission implements NS\IAuthorizator
 				// This combination role-resource-privilege is allowed
 				if ($role->hasPermission($permission)) {
 					$this->allow($role->getKeyName(), $resource, $privilege);
-
-				// This combination role-resource-privilege is not allowed
-				} else {
-					$this->deny($role->getKeyName(), $resource, $privilege);
 				}
 			}
 		}
