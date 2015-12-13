@@ -18,5 +18,5 @@ use Nette;
 
 class Role extends Nette\Object implements IRole
 {
-	use TRole
+	use TRole;
 }
