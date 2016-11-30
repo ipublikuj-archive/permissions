@@ -2,54 +2,70 @@
 /**
  * IPermission.php
  *
- * @copyright	More in license.md
- * @license		http://www.ipublikuj.eu
- * @author		Adam Kadlec http://www.ipublikuj.eu
- * @package		iPublikuj:Permissions!
- * @subpackage	Entities
- * @since		5.0
+ * @copyright      More in license.md
+ * @license        http://www.ipublikuj.eu
+ * @author         Adam Kadlec http://www.ipublikuj.eu
+ * @package        iPublikuj:Permissions!
+ * @subpackage     Entities
+ * @since          1.0.0
  *
- * @date		13.03.14
+ * @date           13.03.14
  */
+
+declare(strict_types = 1);
 
 namespace IPub\Permissions\Entities;
 
 interface IPermission
 {
 	/**
+	 * Permission string delimiter
+	 *
+	 * @var string
+	 */
+	const DELIMITER = ':';
+
+	/**
 	 * Get permission resource
 	 *
-	 * @return string
+	 * @return IResource|NULL
 	 */
-	public function getResource();
+	function getResource();
 
 	/**
 	 * Get permission privilege
 	 *
 	 * @return string
 	 */
-	public function getPrivilege();
+	function getPrivilege();
+
+	/**
+	 * Get permission assertion callback
+	 * 
+	 * @return callable|NULL
+	 */
+	public function getAssertion();
 
 	/**
 	 * Set permission details like title, description, etc.
 	 *
 	 * @param array $details
-	 *
-	 * @return $this
+	 * 
+	 * @return void
 	 */
-	public function setDetails(array $details);
+	function setDetails(array $details);
 
 	/**
 	 * Get permission title
 	 *
 	 * @return string|null
 	 */
-	public function getTitle();
+	function getTitle();
 
 	/**
 	 * Get permission title
 	 *
 	 * @return string|null
 	 */
-	public function getDescription();
+	function getDescription();
 }

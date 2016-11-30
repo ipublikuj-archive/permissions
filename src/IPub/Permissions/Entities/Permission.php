@@ -2,15 +2,17 @@
 /**
  * Permission.php
  *
- * @copyright	More in license.md
- * @license		http://www.ipublikuj.eu
- * @author		Adam Kadlec http://www.ipublikuj.eu
- * @package		iPublikuj:Permissions!
- * @subpackage	Entities
- * @since		5.0
+ * @copyright      More in license.md
+ * @license        http://www.ipublikuj.eu
+ * @author         Adam Kadlec http://www.ipublikuj.eu
+ * @package        iPublikuj:Permissions!
+ * @subpackage     Entities
+ * @since          1.0.0
  *
- * @date		13.03.14
+ * @date           13.03.14
  */
+
+declare(strict_types = 1);
 
 namespace IPub\Permissions\Entities;
 
@@ -20,38 +22,50 @@ use Nette\Utils;
 use IPub;
 use IPub\Permissions\Security;
 
-class Permission extends Nette\Object implements IPermission
+class Permission implements IPermission
 {
+	/**
+	 * Implement nette smart magic
+	 */
+	use Nette\SmartObject;
+
 	/**
 	 * Permission resource
 	 *
 	 * @var string
 	 */
-	protected $resource;
+	private $resource;
 
 	/**
 	 * Permission privilege
 	 *
 	 * @var string
 	 */
-	protected $privilege;
+	private $privilege;
+
+	/**
+	 * @var callable|NULL
+	 */
+	private $assertion;
 
 	/**
 	 * Permission details
 	 *
-	 * @var array
+	 * @var Utils\ArrayHash
 	 */
-	protected $details = [];
+	private $details;
 
 	/**
-	 * @param string $resource
-	 * @param string $privilege
+	 * @param IResource|NULL $resource
+	 * @param string|NULL $privilege
 	 * @param array $details
+	 * @param callable|NULL $assertion
 	 */
-	public function __construct($resource, $privilege, $details = [])
+	public function __construct(IResource $resource = NULL, string $privilege = NULL, $details = [], callable $assertion = NULL)
 	{
-		$this->resource		= $resource;
-		$this->privilege	= $privilege;
+		$this->resource = $resource;
+		$this->privilege = $privilege;
+		$this->assertion = $assertion;
 
 		// Check if permission details are provided too
 		if (!empty($details)) {
@@ -78,6 +92,14 @@ class Permission extends Nette\Object implements IPermission
 	/**
 	 * {@inheritdoc}
 	 */
+	public function getAssertion()
+	{
+		return $this->assertion;
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
 	public function setDetails(array $details)
 	{
 		$this->details = Utils\ArrayHash::from($details);
@@ -88,7 +110,7 @@ class Permission extends Nette\Object implements IPermission
 	 */
 	public function getTitle()
 	{
-		return isset($this->details->title) ? $this->details->title : NULL;
+		return $this->details->offsetExists('title') ? $this->details->offsetGet('title') : NULL;
 	}
 
 	/**
@@ -96,7 +118,7 @@ class Permission extends Nette\Object implements IPermission
 	 */
 	public function getDescription()
 	{
-		return isset($this->details['description']) ? $this->details['description'] : NULL;
+		return $this->details->offsetExists('description') ? $this->details->offsetGet('description') : NULL;
 	}
 
 	/**
@@ -106,6 +128,6 @@ class Permission extends Nette\Object implements IPermission
 	 */
 	public function __toString()
 	{
-		return $this->resource . Security\Permission::DELIMITER . $this->privilege;
+		return ((string) $this->resource) . self::DELIMITER . $this->privilege;
 	}
 }

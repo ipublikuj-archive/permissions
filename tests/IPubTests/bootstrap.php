@@ -1,6 +1,6 @@
 <?php
 
-require __DIR__ . '/../../vendor/autoload.php';
+require __DIR__ . '/../../../../../vendor/autoload.php';
 
 if (!class_exists('Tester\Assert')) {
 	echo "Install Nette Tester using `composer update --dev`\n";
@@ -19,5 +19,5 @@ function id($val) {
 }
 
 function run(Tester\TestCase $testCase) {
-	$testCase->run(isset($_SERVER['argv'][1]) ? $_SERVER['argv'][1] : NULL);
+	$testCase->run();
 }

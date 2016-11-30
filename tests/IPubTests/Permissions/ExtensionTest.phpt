@@ -3,15 +3,17 @@
  * Test: IPub\Permissions\Extension
  * @testCase
  *
- * @copyright	More in license.md
- * @license		http://www.ipublikuj.eu
- * @author		Adam Kadlec http://www.ipublikuj.eu
- * @package		iPublikuj:Permissions!
- * @subpackage	Tests
- * @since		5.0
+ * @copyright      More in license.md
+ * @license        http://www.ipublikuj.eu
+ * @author         Adam Kadlec http://www.ipublikuj.eu
+ * @package        iPublikuj:Permissions!
+ * @subpackage     Tests
+ * @since          1.0.0
  *
- * @date		13.01.15
+ * @date           13.01.15
  */
+
+declare(strict_types = 1);
 
 namespace IPubTests\Permissions;
 
@@ -23,22 +25,22 @@ use Tester\Assert;
 use IPub;
 use IPub\Permissions;
 
-require __DIR__ . '/../bootstrap.php';
-require __DIR__ . '/RolesModel.php';
+require __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'bootstrap.php';
+require __DIR__ . DIRECTORY_SEPARATOR . 'RolesProvider.php';
 
 class ExtensionTest extends Tester\TestCase
 {
 	/**
-	 * @return \SystemContainer|\Nette\DI\Container
+	 * @return Nette\DI\Container
 	 */
-	protected function createContainer()
+	protected function createContainer() : Nette\DI\Container
 	{
 		$config = new Nette\Configurator();
 		$config->setTempDirectory(TEMP_DIR);
 
 		Permissions\DI\PermissionsExtension::register($config);
 
-		$config->addConfig(__DIR__ . '/files/config.neon', $config::NONE);
+		$config->addConfig(__DIR__ . DIRECTORY_SEPARATOR . 'files' . DIRECTORY_SEPARATOR . 'config.neon');
 
 		return $config->createContainer();
 	}

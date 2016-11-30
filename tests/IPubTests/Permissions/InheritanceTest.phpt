@@ -29,7 +29,7 @@ require __DIR__ . '/RolesModel.php';
 class InheritanceTest extends Tester\TestCase
 {
 	/**
-	 * @var Permissions\Models\IRolesModel
+	 * @var Permissions\Providers\IRolesProvider
 	 */
 	private $rolesModel;
 

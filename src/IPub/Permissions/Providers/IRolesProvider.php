@@ -1,35 +1,37 @@
 <?php
 /**
- * IPermissionsProvider.php
+ * IRolesProvider.php
  *
  * @copyright      More in license.md
  * @license        http://www.ipublikuj.eu
  * @author         Adam Kadlec http://www.ipublikuj.eu
  * @package        iPublikuj:Permissions!
- * @subpackage     DI
+ * @subpackage     Providers
  * @since          1.0.0
  *
- * @date           12.10.14
+ * @date           10.10.14
  */
 
 declare(strict_types = 1);
 
-namespace IPub\Permissions\DI;
+namespace IPub\Permissions\Providers;
+
+use IPub;
+use IPub\Permissions;
+use IPub\Permissions\Entities;
 
 /**
- * Extension providers interface for permissions
+ * Roles provider interface
  *
  * @package        iPublikuj:Permissions!
- * @subpackage     DI
+ * @subpackage     Providers
  *
  * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
-interface IPermissionsProvider
+interface IRolesProvider
 {
 	/**
-	 * Return array of permissions
-	 *
-	 * @return array
+	 * @return Entities\IRole[]
 	 */
-	function getPermissions();
+	public function findAll() : array;
 }

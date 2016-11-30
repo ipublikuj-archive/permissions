@@ -1,0 +1,33 @@
+checks:
+    php: true
+
+build:
+    environment:
+        php:
+            version: 7.0.7
+
+    dependencies:
+        before:
+            -
+                command: 'mkdir -p build/logs'
+
+    tests:
+        override:
+            -
+                command: 'vendor/bin/tester tests -p php -c ./tests/php.ini-unix --coverage build/logs/clover.xml --coverage-src src'
+                coverage:
+                    file: build/logs/clover.xml
+                    format: php-clover
+
+filter:
+    excluded_paths:
+        - tests/*
+
+coding_style:
+    php:
+        indentation:
+            general:
+                use_tabs: true
+        spaces:
+            before_parentheses:
+                closure_definition: true

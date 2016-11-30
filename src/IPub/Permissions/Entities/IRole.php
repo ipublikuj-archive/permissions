@@ -2,19 +2,24 @@
 /**
  * IRole.php
  *
- * @copyright	More in license.md
- * @license		http://www.ipublikuj.eu
- * @author		Adam Kadlec http://www.ipublikuj.eu
- * @package		iPublikuj:Permissions!
- * @subpackage	Entities
- * @since		5.0
+ * @copyright      More in license.md
+ * @license        http://www.ipublikuj.eu
+ * @author         Adam Kadlec http://www.ipublikuj.eu
+ * @package        iPublikuj:Permissions!
+ * @subpackage     Entities
+ * @since          1.0.0
  *
- * @date		12.03.14
+ * @date           12.03.14
  */
+
+declare(strict_types = 1);
 
 namespace IPub\Permissions\Entities;
 
-interface IRole
+use Nette;
+use Nette\Security as NS;
+
+interface IRole extends NS\IRole
 {
 	/**
 	 * The identifier of the anonymous role
@@ -40,139 +45,133 @@ interface IRole
 	/**
 	 * @param IRole $parent
 	 *
-	 * @return $this
+	 * @return void
 	 */
-	public function setParent(IRole $parent = NULL);
+	function setParent(IRole $parent = NULL);
 
 	/**
 	 * @return IRole
 	 */
-	public function getParent();
+	function getParent();
 
 	/**
-	 * @param array $roles
+	 * @param IRole[] $roles
 	 *
-	 * @return $this
+	 * @return void
 	 */
-	public function setChildren($roles);
+	function setChildren(array $roles);
 
 	/**
-	 * @return array
-	 */
-	public function getChildren();
-
-	/**
-	 * @param string $keyName
+	 * @param IRole $role
 	 *
-	 * @return $this
+	 * @return void
 	 */
-	public function setKeyName($keyName);
+	function addChild(IRole $role);
 
 	/**
-	 * @return string
+	 * @return IRole[]
 	 */
-	public function getKeyName();
+	function getChildren();
 
 	/**
 	 * @param string $name
 	 *
-	 * @return $this
+	 * @return void
 	 */
-	public function setName($name);
+	function setName(string $name);
 
 	/**
-	 * @return string
+	 * @return string|NULL
 	 */
-	public function getName();
+	function getName();
 
 	/**
 	 * @param string $comment
 	 *
-	 * @return $this
+	 * @return void
 	 */
-	public function setComment($comment);
+	function setComment(string $comment);
 
 	/**
-	 * @return string
+	 * @return string|NULL
 	 */
-	public function getComment();
-
-	/**
-	 * @param int $priority
-	 *
-	 * @return $this
-	 */
-	public function setPriority($priority);
-
-	/**
-	 * @return int
-	 */
-	public function getPriority();
-
-	/**
-	 * Returns permissions for the role.
-	 *
-	 * @return string[]
-	 */
-	public function getPermissions();
+	function getComment();
 
 	/**
 	 * Add one permission to role
 	 *
-	 * @param string $permissions
+	 * @param IPermission[] $permissions
 	 *
-	 * @return $this
+	 * @return void
 	 */
-	public function setPermissions($permissions);
-
-	/**
-	 * Checks if a permission exists for this role.
-	 *
-	 * @param  string $permission
-	 *
-	 * @return bool
-	 */
-	public function hasPermission($permission);
+	function setPermissions(array $permissions);
 
 	/**
 	 * Adds a permission
 	 *
-	 * @param string $permission
+	 * @param IPermission $permission
+	 *
+	 * @return void
 	 */
-	public function addPermission($permission);
+	function addPermission(IPermission $permission);
+
+	/**
+	 * Returns permissions for the role
+	 *
+	 * @return IPermission[]
+	 */
+	function getPermissions() : array;
+
+	/**
+	 * Checks if a permission exists for this role.
+	 *
+	 * @param  IPermission $permission
+	 *
+	 * @return bool
+	 */
+	function hasPermission(IPermission $permission) : bool;
+
+	/**
+	 * Remove one specific permission from the role
+	 *
+	 * @param IPermission $permission
+	 *
+	 * @return void
+	 */
+	function removePermission(IPermission $permission);
 
 	/**
 	 * Clear all role permissions
 	 *
-	 * @return $this
+	 * @return void
 	 */
-	public function clearPermissions();
+	function clearPermissions();
 
 	/**
 	 * Check if role is one from system roles
 	 *
 	 * @return bool
 	 */
-	public function isLocked();
+	function isLocked() : bool;
 
 	/**
 	 * Check if role is guest
 	 *
 	 * @return bool
 	 */
-	public function isAnonymous();
+	function isAnonymous() : bool;
 
 	/**
 	 * Check if role is authenticated
 	 *
 	 * @return bool
 	 */
-	public function isAuthenticated();
+	function isAuthenticated() : bool;
 
 	/**
 	 * Check if role is administrator
 	 *
 	 * @return bool
 	 */
-	public function isAdministrator();
+	function isAdministrator() : bool;
 }

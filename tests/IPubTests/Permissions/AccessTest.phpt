@@ -32,7 +32,7 @@ require __DIR__ . '/RolesModel.php';
 class AccessTest extends Tester\TestCase
 {
 	/**
-	 * @var Permissions\Models\IRolesModel
+	 * @var Permissions\Providers\IRolesProvider
 	 */
 	private $rolesModel;
 

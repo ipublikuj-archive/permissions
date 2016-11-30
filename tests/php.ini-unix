@@ -1,0 +1,4 @@
+extension = xdebug.so
+
+[xdebug]
+xdebug.enable = On

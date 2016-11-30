@@ -2,32 +2,49 @@
 /**
  * AnnotationChecker.php
  *
- * @copyright	More in license.md
- * @license		http://www.ipublikuj.eu
- * @author		Adam Kadlec http://www.ipublikuj.eu
- * @package		iPublikuj:Permissions!
- * @subpackage	Access
- * @since		5.0
+ * @copyright      More in license.md
+ * @license        http://www.ipublikuj.eu
+ * @author         Adam Kadlec http://www.ipublikuj.eu
+ * @package        iPublikuj:Permissions!
+ * @subpackage     Access
+ * @since          1.0.0
  *
- * @date		13.10.14
+ * @date           13.10.14
  */
+
+declare(strict_types = 1);
 
 namespace IPub\Permissions\Access;
 
 use Nette;
+use Nette\Application\UI;
 use Nette\Utils;
 use Nette\Security as NS;
 
 use IPub;
+use IPub\Permissions\Entities;
 use IPub\Permissions\Exceptions;
 use IPub\Permissions\Security;
 
-class AnnotationChecker extends Nette\Object implements IChecker, ICheckRequirements
+/**
+ * Presenter & component annotation access checker
+ *
+ * @package        iPublikuj:Permissions!
+ * @subpackage     Access
+ *
+ * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
+ */
+final class AnnotationChecker implements IChecker, ICheckRequirements
 {
+	/**
+	 * Implement nette smart magic
+	 */
+	use Nette\SmartObject;
+
 	/**
 	 * @var NS\User
 	 */
-	protected $user;
+	private $user;
 
 	/**
 	 * @param NS\User $user
@@ -40,15 +57,18 @@ class AnnotationChecker extends Nette\Object implements IChecker, ICheckRequirem
 	/**
 	 * {@inheritdoc}
 	 */
-	public function isAllowed($element)
+	public function isAllowed($element) : bool
 	{
 		// Check annotations only if element have to be secured
-		if ($element instanceof \Reflector && $element->hasAnnotation('Secured')) {
+		if (
+			($element instanceof UI\ComponentReflection || $element instanceof UI\MethodReflection)
+			&& $element->hasAnnotation('Secured')
+		) {
 			return $this->checkUser($element)
-				&& $this->checkResources($element)
-				&& $this->checkPrivileges($element)
-				&& $this->checkPermission($element)
-				&& $this->checkRoles($element);
+			&& $this->checkResources($element)
+			&& $this->checkPrivileges($element)
+			&& $this->checkPermission($element)
+			&& $this->checkRoles($element);
 
 		} else {
 			return TRUE;
@@ -56,13 +76,13 @@ class AnnotationChecker extends Nette\Object implements IChecker, ICheckRequirem
 	}
 
 	/**
-	 * @param \Reflector $element
+	 * @param UI\ComponentReflection|UI\MethodReflection $element
 	 *
 	 * @return bool
 	 *
 	 * @throws Exceptions\InvalidArgumentException
 	 */
-	protected function checkUser(\Reflector $element)
+	private function checkUser($element) : bool
 	{
 		// Check if element has @Secured\User annotation
 		if ($element->hasAnnotation('Secured\User')) {
@@ -70,19 +90,19 @@ class AnnotationChecker extends Nette\Object implements IChecker, ICheckRequirem
 			$user = $element->getAnnotation('Secured\User');
 
 			// Annotation is single string
-			if (is_string($user)) {
+			if (is_string($user) && in_array($user, ['loggedIn', 'guest'], TRUE)) {
 				// User have to be logged in and is not
-				if ($user == 'loggedIn' && !$this->user->isLoggedIn()) {
+				if ($user === 'loggedIn' && $this->user->isLoggedIn() === FALSE) {
 					return FALSE;
 
 				// User have to be logged out and is logged in
-				} else if ($user == 'guest' && $this->user->isLoggedIn()) {
+				} elseif ($user === 'guest' && $this->user->isLoggedIn() === TRUE) {
 					return FALSE;
 				}
 
-			// Annotation have multiple definitions
+			// Annotation have wrong definition
 			} else {
-				throw new Exceptions\InvalidArgumentException('In @Security\User annotation are allowed only two strings: \'loggedIn\' & \'guest\'');
+				throw new Exceptions\InvalidArgumentException('In @Security\User annotation is allowed only one from two strings: \'loggedIn\' & \'guest\'');
 			}
 
 			return TRUE;
@@ -92,62 +112,73 @@ class AnnotationChecker extends Nette\Object implements IChecker, ICheckRequirem
 	}
 
 	/**
-	 * @param \Reflector $element
+	 * @param UI\ComponentReflection|UI\MethodReflection $element
 	 *
 	 * @return bool
 	 *
 	 * @throws Exceptions\InvalidStateException
 	 */
-	protected function checkResources(\Reflector $element)
+	private function checkResources($element) : bool
 	{
 		// Check if element has @Security\Resource annotation & @Secured\Privilege annotation
 		if ($element->hasAnnotation('Secured\Resource')) {
-			$resources	= (array) $element->getAnnotation('Secured\Resource');
-			$privileges	= $element->hasAnnotation('Secured\Privilege') ? (array) $element->getAnnotation('Secured\Privilege') : [];
+			// Check if element has @Security\Resource annotation & @Secured\Privilege annotation
+			if ($element->hasAnnotation('Secured\Resource')) {
+				$resources = UI\ComponentReflection::parseAnnotation($element, 'Secured\Resource');
 
-			if (count($resources) != 1) {
-				throw new Exceptions\InvalidStateException('Invalid resources count in @Security\Resource annotation!');
-			}
+				if (count($resources) != 1) {
+					throw new Exceptions\InvalidStateException('Invalid resources count in @Security\Resource annotation!');
+				}
 
-			foreach ($resources as $resource) {
-				if (count($privileges)) {
-					foreach($privileges as $privilege) {
-						if ($this->user->isAllowed($resource, $privilege)) {
+				$privileges = UI\ComponentReflection::parseAnnotation($element, 'Secured\Privilege');
+
+				foreach ($resources as $resource) {
+					if ($privileges !== FALSE) {
+						foreach ($privileges as $privilege) {
+							if ($this->user->isAllowed($resource, $privilege)) {
+								return TRUE;
+							}
+						}
+
+					} else {
+						if ($this->user->isAllowed($resource)) {
 							return TRUE;
 						}
 					}
-
-				} else {
-					if ($this->user->isAllowed($resource)) {
-						return TRUE;
-					}
 				}
+
+				return FALSE;
 			}
 
-			return FALSE;
+			return TRUE;
 		}
 
 		return TRUE;
 	}
 
 	/**
-	 * @param \Reflector $element
+	 * @param UI\ComponentReflection|UI\MethodReflection $element
 	 *
 	 * @return bool
 	 *
 	 * @throws Exceptions\InvalidStateException
 	 */
-	protected function checkPrivileges(\Reflector $element)
+	private function checkPrivileges($element) : bool
 	{
 		// Check if element has @Secured\Privilege annotation & hasn't @Secured\Resource annotation
 		if (!$element->hasAnnotation('Secured\Resource') && $element->hasAnnotation('Secured\Privilege')) {
-			$privileges = (array) $element->getAnnotation('Secured\Privilege');
+			$privileges = UI\ComponentReflection::parseAnnotation($element, 'Secured\Privilege');
 
 			if (count($privileges) != 1) {
 				throw new Exceptions\InvalidStateException('Invalid privileges count in @Security\Privilege annotation!');
 			}
 
-			foreach($privileges as $privilege) {
+			foreach ($privileges as $privilege) {
+				// Check if privilege name is defined
+				if ($privilege === TRUE) {
+					continue;
+				}
+
 				if ($this->user->isAllowed(NS\IAuthorizator::ALL, $privilege)) {
 					return TRUE;
 				}
@@ -160,23 +191,28 @@ class AnnotationChecker extends Nette\Object implements IChecker, ICheckRequirem
 	}
 
 	/**
-	 * @param \Reflector $element
+	 * @param UI\ComponentReflection|UI\MethodReflection $element
 	 *
 	 * @return bool
 	 */
-	protected function checkPermission(\Reflector $element)
+	private function checkPermission($element) : bool
 	{
 		// Check if element has @Secured\Permission annotation
 		if ($element->hasAnnotation('Secured\Permission')) {
-			$permissions = (array) $element->getAnnotation('Secured\Permission');
+			$permissions = UI\ComponentReflection::parseAnnotation($element, 'Secured\Permission');
 
-			foreach($permissions as $permission) {
+			foreach ($permissions as $permission) {
+				// Check if parameters are defined
+				if ($permission === TRUE) {
+					continue;
+				}
+
 				// Parse resource & privilege from permission
-				list($resource, $privilege) = explode(Security\Permission::DELIMITER, $permission);
+				list($resource, $privilege) = explode(Entities\IPermission::DELIMITER, $permission);
 
 				// Remove white spaces
-				$resource	= Utils\Strings::trim($resource);
-				$privilege	= Utils\Strings::trim($privilege);
+				$resource = Utils\Strings::trim($resource);
+				$privilege = Utils\Strings::trim($privilege);
 
 				if ($this->user->isAllowed($resource, $privilege)) {
 					return TRUE;
@@ -190,17 +226,22 @@ class AnnotationChecker extends Nette\Object implements IChecker, ICheckRequirem
 	}
 
 	/**
-	 * @param \Reflector $element
+	 * @param UI\ComponentReflection|UI\MethodReflection $element
 	 *
 	 * @return bool
 	 */
-	protected function checkRoles(\Reflector $element)
+	private function checkRoles($element) : bool
 	{
 		// Check if element has @Secured\Role annotation
 		if ($element->hasAnnotation('Secured\Role')) {
-			$roles = (array) $element->getAnnotation('Secured\Role');
+			$roles = UI\ComponentReflection::parseAnnotation($element, 'Secured\Role');
 
 			foreach ($roles as $role) {
+				// Check if role name is defined
+				if ($role === TRUE) {
+					continue;
+				}
+
 				if ($this->user->isInRole($role)) {
 					return TRUE;
 				}

@@ -6,30 +6,32 @@
  * @license        http://www.ipublikuj.eu
  * @author         Adam Kadlec http://www.ipublikuj.eu
  * @package        iPublikuj:Permissions!
- * @subpackage     DI
- * @since          1.0.0
+ * @subpackage     Providers
+ * @since          2.0.0
  *
- * @date           12.10.14
+ * @date           30.11.16
  */
 
 declare(strict_types = 1);
 
-namespace IPub\Permissions\DI;
+namespace IPub\Permissions\Providers;
+
+use IPub;
+use IPub\Permissions;
+use IPub\Permissions\Entities;
 
 /**
- * Extension providers interface for permissions
+ * Permissions provider interface
  *
  * @package        iPublikuj:Permissions!
- * @subpackage     DI
+ * @subpackage     Providers
  *
  * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
 interface IPermissionsProvider
 {
 	/**
-	 * Return array of permissions
-	 *
-	 * @return array
+	 * @return Entities\IPermission[]
 	 */
-	function getPermissions();
+	public function findAll() : array;
 }

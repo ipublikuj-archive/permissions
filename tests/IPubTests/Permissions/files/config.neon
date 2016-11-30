@@ -1,4 +1,4 @@
 services:
 	# Default roles model
 	models.roles:
-		class: IPubTests\Permissions\RolesModel
+		class: IPubTests\Permissions\RolesProvider

@@ -7,9 +7,9 @@
  * @author         Adam Kadlec http://www.ipublikuj.eu
  * @package        iPublikuj:Permissions!
  * @subpackage     DI
- * @since          1.0.0
+ * @since          2.0.0
  *
- * @date           12.10.14
+ * @date           30.11.16
  */
 
 declare(strict_types = 1);
@@ -17,19 +17,19 @@ declare(strict_types = 1);
 namespace IPub\Permissions\DI;
 
 /**
- * Extension providers interface for permissions
+ * Extension providers interface for roles
  *
  * @package        iPublikuj:Permissions!
  * @subpackage     DI
  *
  * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
-interface IPermissionsProvider
+interface IRolesProvider
 {
 	/**
-	 * Return array of permissions
+	 * Return array of users roles
 	 *
 	 * @return array
 	 */
-	function getPermissions();
+	function getRoles();
 }

@@ -2,17 +2,10 @@ language: php
 
 env:
   - NETTE=default
-  - NETTE=~2.2.0
+  - NETTE=~2.3.0
 
 php:
-  - 5.4
-  - 5.5
-  - 5.6
-  - hhvm
-
-matrix:
-  allow_failures:
-    - php: hhvm
+  - 7.0
 
 before_script:
   - php .travis.composer.php
@@ -20,7 +13,7 @@ before_script:
   - composer install --no-interaction --prefer-source --dev
 
 script:
-  - vendor/bin/tester -s -p php tests
+  - vendor/bin/tester -s -p php -c ./tests/php.ini-unix tests
 
 after_failure:
   - 'for i in $(find ./tests -name \*.actual); do echo "--- $i"; cat $i; echo; echo; done'

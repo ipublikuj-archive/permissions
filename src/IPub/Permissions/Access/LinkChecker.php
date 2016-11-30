@@ -2,15 +2,17 @@
 /**
  * LinkChecker.php
  *
- * @copyright	More in license.md
- * @license		http://www.ipublikuj.eu
- * @author		Adam Kadlec http://www.ipublikuj.eu
- * @package		iPublikuj:Permissions!
- * @subpackage	Access
- * @since		5.0
+ * @copyright      More in license.md
+ * @license        http://www.ipublikuj.eu
+ * @author         Adam Kadlec http://www.ipublikuj.eu
+ * @package        iPublikuj:Permissions!
+ * @subpackage     Access
+ * @since          1.0.0
  *
- * @date		13.10.14
+ * @date           13.10.14
  */
+
+declare(strict_types = 1);
 
 namespace IPub\Permissions\Access;
 
@@ -19,22 +21,35 @@ use Nette\Application;
 use Nette\Application\UI;
 use Nette\Security as NS;
 
-class LinkChecker extends Nette\Object implements IChecker
+/**
+ * Create link access checker
+ *
+ * @package        iPublikuj:Permissions!
+ * @subpackage     Access
+ *
+ * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
+ */
+final class LinkChecker implements IChecker
 {
+	/**
+	 * Implement nette smart magic
+	 */
+	use Nette\SmartObject;
+
 	/**
 	 * @var Application\IPresenterFactory
 	 */
-	protected $presenterFactory;
+	private $presenterFactory;
 
 	/**
 	 * @var Application\Application
 	 */
-	protected $application;
+	private $application;
 
 	/**
 	 * @var ICheckRequirements
 	 */
-	protected $requirementsChecker;
+	private $requirementsChecker;
 
 	/**
 	 * @param Application\IPresenterFactory $presenterFactory
@@ -46,8 +61,8 @@ class LinkChecker extends Nette\Object implements IChecker
 		Application\Application $application,
 		ICheckRequirements $requirementsChecker
 	) {
-		$this->presenterFactory	= $presenterFactory;
-		$this->application		= $application;
+		$this->presenterFactory = $presenterFactory;
+		$this->application = $application;
 
 		// Permission annotation access checker
 		$this->requirementsChecker = $requirementsChecker;
@@ -60,11 +75,11 @@ class LinkChecker extends Nette\Object implements IChecker
 	 *
 	 * @return bool
 	 */
-	public function isAllowed($element)
+	public function isAllowed($element) : bool
 	{
 		list($presenter, $action) = $this->formatLink($element);
 
-		$presenterReflection = UI\PresenterComponentReflection::from($this->presenterFactory->getPresenterClass($presenter));
+		$presenterReflection = new UI\ComponentReflection($this->presenterFactory->getPresenterClass($presenter));
 
 		if (!$this->requirementsChecker->isAllowed($presenterReflection)) {
 			return FALSE;
@@ -86,10 +101,10 @@ class LinkChecker extends Nette\Object implements IChecker
 	 *
 	 * @return array(presenter, action)
 	 */
-	public function formatLink($destination)
+	public function formatLink(string $destination) : array
 	{
-		if ($destination == 'this') {
-			return array($this->application->getPresenter()->getName(), $this->application->getPresenter()->getAction());
+		if ($destination === 'this') {
+			return [$this->application->getPresenter()->getName(), $this->application->getPresenter()->getAction()];
 		}
 
 		$parts = explode(':', $destination);
@@ -119,6 +134,6 @@ class LinkChecker extends Nette\Object implements IChecker
 			$action = array_pop($parts);
 		}
 
-		return array(implode(':', $parts), $action);
+		return [implode(':', $parts), $action];
 	}
 }
