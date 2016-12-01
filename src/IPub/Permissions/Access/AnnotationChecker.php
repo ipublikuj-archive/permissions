@@ -60,8 +60,8 @@ final class AnnotationChecker extends Nette\Object implements IChecker, ICheckRe
 			&& $element->hasAnnotation('Secured')
 		) {
 			return $this->checkUser($element)
-			&& $this->checkResources($element)/*
-			&& $this->checkPrivileges($element)*/
+			&& $this->checkResources($element)
+			&& $this->checkPrivileges($element)
 			&& $this->checkPermission($element)
 			&& $this->checkRoles($element);
 
