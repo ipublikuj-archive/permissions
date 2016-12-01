@@ -71,7 +71,7 @@ final class AnnotationChecker extends Nette\Object implements IChecker, ICheckRe
 	}
 
 	/**
-	 * @param UI\ComponentReflection|UI\MethodReflection $element
+	 * @param UI\ComponentReflection|UI\MethodReflection|Nette\Reflection\ClassType|Nette\Reflection\Method|\Reflector $element
 	 *
 	 * @return bool
 	 *
@@ -107,7 +107,7 @@ final class AnnotationChecker extends Nette\Object implements IChecker, ICheckRe
 	}
 
 	/**
-	 * @param UI\ComponentReflection|UI\MethodReflection $element
+	 * @param UI\ComponentReflection|UI\MethodReflection|Nette\Reflection\ClassType|Nette\Reflection\Method|\Reflector $element
 	 *
 	 * @return bool
 	 *
@@ -147,7 +147,7 @@ final class AnnotationChecker extends Nette\Object implements IChecker, ICheckRe
 	}
 
 	/**
-	 * @param UI\ComponentReflection|UI\MethodReflection $element
+	 * @param UI\ComponentReflection|UI\MethodReflection|Nette\Reflection\ClassType|Nette\Reflection\Method|\Reflector $element
 	 *
 	 * @return bool
 	 *
@@ -181,7 +181,7 @@ final class AnnotationChecker extends Nette\Object implements IChecker, ICheckRe
 	}
 
 	/**
-	 * @param UI\ComponentReflection|UI\MethodReflection $element
+	 * @param UI\ComponentReflection|UI\MethodReflection|Nette\Reflection\ClassType|Nette\Reflection\Method|\Reflector $element
 	 *
 	 * @return bool
 	 */
@@ -216,7 +216,7 @@ final class AnnotationChecker extends Nette\Object implements IChecker, ICheckRe
 	}
 
 	/**
-	 * @param UI\ComponentReflection|UI\MethodReflection $element
+	 * @param UI\ComponentReflection|UI\MethodReflection|Nette\Reflection\ClassType|Nette\Reflection\Method|\Reflector $element
 	 *
 	 * @return bool
 	 */
@@ -244,7 +244,7 @@ final class AnnotationChecker extends Nette\Object implements IChecker, ICheckRe
 	}
 
 	/**
-	 * @param \Reflector|UI\ComponentReflection|UI\MethodReflection $element
+	 * @param UI\ComponentReflection|UI\MethodReflection|Nette\Reflection\ClassType|Nette\Reflection\Method|\Reflector $element
 	 * @param string $attribute
 	 *
 	 * @return array|FALSE
