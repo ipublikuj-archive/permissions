@@ -25,6 +25,7 @@
 		"nette/application"	: "~2.3@dev",
 		"nette/di"			: "~2.3@dev",
 		"nette/utils"		: "~2.3@dev",
+		"nette/security"	: "~2.3@dev",
 
 		"latte/latte"	: "~2.3@dev"
 	},
