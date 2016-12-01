@@ -2,7 +2,7 @@
 
 define('DS', DIRECTORY_SEPARATOR);
 
-require __DIR__ . DS . '..' . DS . '..' . DS . 'autoload.php';
+require __DIR__ . DS . '..' . DS . '..' . DS . 'vendor' . DS . 'autoload.php';
 
 if (!class_exists('Tester\Assert')) {
 	echo "Install Nette Tester using `composer update --dev`\n";
