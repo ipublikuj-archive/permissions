@@ -1,0 +1,2 @@
+extensions:
+	- IPubTests\Permissions\Libs\DummyExtensionOne

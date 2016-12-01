@@ -65,8 +65,8 @@ final class AnnotationChecker implements IChecker, ICheckRequirements
 			&& $element->hasAnnotation('Secured')
 		) {
 			return $this->checkUser($element)
-			&& $this->checkResources($element)
-			&& $this->checkPrivileges($element)
+			&& $this->checkResources($element)/*
+			&& $this->checkPrivileges($element)*/
 			&& $this->checkPermission($element)
 			&& $this->checkRoles($element);
 
@@ -122,35 +122,30 @@ final class AnnotationChecker implements IChecker, ICheckRequirements
 	{
 		// Check if element has @Security\Resource annotation & @Secured\Privilege annotation
 		if ($element->hasAnnotation('Secured\Resource')) {
-			// Check if element has @Security\Resource annotation & @Secured\Privilege annotation
-			if ($element->hasAnnotation('Secured\Resource')) {
-				$resources = UI\ComponentReflection::parseAnnotation($element, 'Secured\Resource');
+			$resources = UI\ComponentReflection::parseAnnotation($element, 'Secured\Resource');
 
-				if (count($resources) != 1) {
-					throw new Exceptions\InvalidStateException('Invalid resources count in @Security\Resource annotation!');
-				}
+			if (count($resources) != 1) {
+				throw new Exceptions\InvalidStateException('Invalid resources count in @Security\Resource annotation!');
+			}
 
-				$privileges = UI\ComponentReflection::parseAnnotation($element, 'Secured\Privilege');
+			$privileges = UI\ComponentReflection::parseAnnotation($element, 'Secured\Privilege');
 
-				foreach ($resources as $resource) {
-					if ($privileges !== FALSE) {
-						foreach ($privileges as $privilege) {
-							if ($this->user->isAllowed($resource, $privilege)) {
-								return TRUE;
-							}
-						}
-
-					} else {
-						if ($this->user->isAllowed($resource)) {
+			foreach ($resources as $resource) {
+				if ($privileges !== FALSE) {
+					foreach ($privileges as $privilege) {
+						if ($this->user->isAllowed($resource, $privilege)) {
 							return TRUE;
 						}
 					}
-				}
 
-				return FALSE;
+				} else {
+					if ($this->user->isAllowed($resource)) {
+						return TRUE;
+					}
+				}
 			}
 
-			return TRUE;
+			return FALSE;
 		}
 
 		return TRUE;

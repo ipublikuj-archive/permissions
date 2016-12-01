@@ -3,15 +3,17 @@
  * Test: IPub\Permissions\Access
  * @testCase
  *
- * @copyright	More in license.md
- * @license		http://www.ipublikuj.eu
- * @author		Adam Kadlec http://www.ipublikuj.eu
- * @package		iPublikuj:Permissions!
- * @subpackage	Tests
- * @since		5.0
+ * @copyright      More in license.md
+ * @license        http://www.ipublikuj.eu
+ * @author         Adam Kadlec http://www.ipublikuj.eu
+ * @package        iPublikuj:Permissions!
+ * @subpackage     Tests
+ * @since          1.0.0
  *
- * @date		14.01.15
+ * @date           14.01.15
  */
+
+declare(strict_types = 1);
 
 namespace IPubTests\Permissions;
 
@@ -26,28 +28,20 @@ use Tester\Assert;
 use IPub;
 use IPub\Permissions;
 
-require __DIR__ . '/../bootstrap.php';
-require __DIR__ . '/RolesModel.php';
+require __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'bootstrap.php';
+require __DIR__ . DS . 'libs' . DS . 'ResourcesProvider.php';
+require __DIR__ . DS . 'libs' . DS . 'PermissionsProvider.php';
+require __DIR__ . DS . 'libs' . DS . 'RolesProvider.php';
 
 class AccessTest extends Tester\TestCase
 {
 	/**
-	 * @var Permissions\Providers\IRolesProvider
-	 */
-	private $rolesModel;
-
-	/**
-	 * @var Permissions\Security\Permission
-	 */
-	private $permission;
-
-	/**
-	 * @var Nette\Application\IPresenterFactory
+	 * @var Application\IPresenterFactory
 	 */
 	private $presenterFactory;
 
 	/**
-	 * @var \SystemContainer|\Nette\DI\Container
+	 * @var Nette\DI\Container
 	 */
 	private $container;
 
@@ -59,28 +53,7 @@ class AccessTest extends Tester\TestCase
 	/**
 	 * @return array[]|array
 	 */
-	public function dataPermissions()
-	{
-		return [
-			['firstResourceName:firstPrivilegeName', [
-				'title'			=> 'This is first example title',
-				'description'	=> 'This is first example description'
-			]],
-			['secondResourceName:secondPrivilegeName', [
-				'title'			=> 'This is second example title',
-				'description'	=> 'This is second example description'
-			]],
-			['thirdResourceName:thirdPrivilegeName', [
-				'title'			=> 'This is third example title',
-				'description'	=> 'This is third example description'
-			]]
-		];
-	}
-
-	/**
-	 * @return array[]|array
-	 */
-	public function dataRegisteredUsers()
+	public function dataRegisteredUsers() : array
 	{
 		return [
 			['john', '123456'],
@@ -88,7 +61,7 @@ class AccessTest extends Tester\TestCase
 		];
 	}
 
-	public function dataGuestUsers()
+	public function dataGuestUsers() : array
 	{
 		return [
 			['guest']
@@ -104,37 +77,26 @@ class AccessTest extends Tester\TestCase
 
 		$this->container = $this->createContainer();
 
-		// Get roles model services
-		$this->rolesModel = $this->container->getService('models.roles');
-
-		// Get permissions service
-		$this->permission = $this->container->getService('permissions.permissions');
-
 		// Get presenter factory from container
-		$this->presenterFactory = $this->container->getByType('Nette\Application\IPresenterFactory');
+		$this->presenterFactory = $this->container->getByType(Nette\Application\IPresenterFactory::class);
 
 		// Get application user
 		$this->user = $this->container->getService('user');
 
 		// Create user authenticator
 		$authenticator = new Nette\Security\SimpleAuthenticator([
-			'john'	=> '123456',
-			'jane'	=> '123456',
+			'john' => '123456',
+			'jane' => '123456',
 		], [
-			'john'	=> [
+			'john' => [
 				Permissions\Entities\IRole::ROLE_AUTHENTICATED
 			],
-			'jane'	=> [
+			'jane' => [
 				Permissions\Entities\IRole::ROLE_AUTHENTICATED,
 				Permissions\Entities\IRole::ROLE_ADMINISTRATOR
 			]
 		]);
 		$this->user->setAuthenticator($authenticator);
-
-		// Register permissions
-		foreach($this->dataPermissions() as $permission) {
-			$this->permission->addPermission($permission[0], $permission[1]);
-		}
 	}
 
 	/**
@@ -143,7 +105,7 @@ class AccessTest extends Tester\TestCase
 	 * @param string $username
 	 * @param string $password
 	 */
-	public function testPresenterActionAllowed($username, $password)
+	public function testPresenterActionAllowed(string $username, string $password)
 	{
 		// Create test presenter
 		$presenter = $this->createPresenter();
@@ -152,14 +114,14 @@ class AccessTest extends Tester\TestCase
 		$this->user->login($username, $password);
 
 		// Create GET request
-		$request = new Application\Request('Test', 'GET', array('action' => 'allowed'));
+		$request = new Application\Request('Test', 'GET', ['action' => 'allowed']);
 		// & fire presenter & catch response
 		$response = $presenter->run($request);
 
 		// Logout user
 		$this->user->logout(TRUE);
 
-		Assert::true($response instanceof Nette\Application\Responses\TextResponse );
+		Assert::true($response instanceof Nette\Application\Responses\TextResponse);
 		Assert::equal('Passed', $response->getSource());
 	}
 
@@ -169,7 +131,7 @@ class AccessTest extends Tester\TestCase
 	 * @param string $username
 	 * @param string $password
 	 */
-	public function testPresenterActionAllowedRole($username, $password)
+	public function testPresenterActionAllowedRole(string $username, string $password)
 	{
 		// Create test presenter
 		$presenter = $this->createPresenter();
@@ -178,14 +140,14 @@ class AccessTest extends Tester\TestCase
 		$this->user->login($username, $password);
 
 		// Create GET request
-		$request = new Application\Request('Test', 'GET', array('action' => 'allowedRole'));
+		$request = new Application\Request('Test', 'GET', ['action' => 'allowedRole']);
 		// & fire presenter & catch response
 		$response = $presenter->run($request);
 
 		// Logout user
 		$this->user->logout(TRUE);
 
-		Assert::true($response instanceof Nette\Application\Responses\TextResponse );
+		Assert::true($response instanceof Nette\Application\Responses\TextResponse);
 		Assert::equal('Passed', $response->getSource());
 	}
 
@@ -196,13 +158,13 @@ class AccessTest extends Tester\TestCase
 	 *
 	 * @throws Nette\Application\ForbiddenRequestException
 	 */
-	public function testPresenterActionNotAllowed($username)
+	public function testPresenterActionNotAllowed(string $username)
 	{
 		// Create test presenter
 		$presenter = $this->createPresenter();
 
 		// Create GET request
-		$request = new Application\Request('Test', 'GET', array('action' => 'allowedRole'));
+		$request = new Application\Request('Test', 'GET', ['action' => 'allowedRole']);
 		// & fire presenter
 		$presenter->run($request);
 	}
@@ -215,7 +177,7 @@ class AccessTest extends Tester\TestCase
 	 *
 	 * @throws Nette\Application\ForbiddenRequestException
 	 */
-	public function testNotAllowedLoddedIn($username, $password)
+	public function testNotAllowedLoddedIn(string $username, string $password)
 	{
 		// Create test presenter
 		$presenter = $this->createPresenter();
@@ -224,7 +186,7 @@ class AccessTest extends Tester\TestCase
 		$this->user->login($username, $password);
 
 		// Create GET request
-		$request = new Application\Request('Test', 'GET', array('action' => 'onlyGuest'));
+		$request = new Application\Request('Test', 'GET', ['action' => 'onlyGuest']);
 		// & fire presenter & catch
 		$presenter->run($request);
 	}
@@ -234,24 +196,26 @@ class AccessTest extends Tester\TestCase
 	 *
 	 * @param string $username
 	 */
-	public function testAllowedGuest($username)
+	public function testAllowedGuest(string $username)
 	{
+		$this->user->logout(TRUE);
+
 		// Create test presenter
 		$presenter = $this->createPresenter();
 
 		// Create GET request
-		$request = new Application\Request('Test', 'GET', array('action' => 'onlyGuest'));
+		$request = new Application\Request('Test', 'GET', ['action' => 'onlyGuest']);
 		// & fire presenter & catch response
 		$response = $presenter->run($request);
 
-		Assert::true($response instanceof Nette\Application\Responses\TextResponse );
+		Assert::true($response instanceof Nette\Application\Responses\TextResponse);
 		Assert::equal('Passed', $response->getSource());
 	}
 
 	/**
 	 * @return Application\IPresenter
 	 */
-	protected function createPresenter()
+	protected function createPresenter() : Application\IPresenter
 	{
 		// Create test presenter
 		$presenter = $this->presenterFactory->createPresenter('Test');
@@ -262,17 +226,17 @@ class AccessTest extends Tester\TestCase
 	}
 
 	/**
-	 * @return \SystemContainer|\Nette\DI\Container
+	 * @return Nette\DI\Container
 	 */
-	protected function createContainer()
+	private function createContainer() : Nette\DI\Container
 	{
 		$config = new Nette\Configurator();
 		$config->setTempDirectory(TEMP_DIR);
 
 		Permissions\DI\PermissionsExtension::register($config);
 
-		$config->addConfig(__DIR__ . '/files/config.neon', $config::NONE);
-		$config->addConfig(__DIR__ . '/files/presenters.neon', $config::NONE);
+		$config->addConfig(__DIR__ . DS . 'files' . DS . 'config.neon');
+		$config->addConfig(__DIR__ . DS . 'files' . DS . 'presenters.neon');
 
 		return $config->createContainer();
 	}
@@ -280,8 +244,8 @@ class AccessTest extends Tester\TestCase
 
 /**
  * @Secured
- * @Secured\Resource(firstResourceName)
- * @Secured\Privilege(firstPrivilegeName)
+ * @Secured\Resource(firstResource)
+ * @Secured\Privilege(firstPrivilege)
  */
 class TestPresenter extends UI\Presenter
 {

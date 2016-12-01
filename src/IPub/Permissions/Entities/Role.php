@@ -81,6 +81,8 @@ class Role implements IRole
 	 */
 	public function setParent(IRole $parent = NULL)
 	{
+		$parent->addChild($this);
+
 		$this->parent = $parent;
 	}
 
@@ -97,11 +99,16 @@ class Role implements IRole
 	 */
 	public function setChildren(array $roles)
 	{
+		foreach ($this->getChildren() as $child) {
+			$child->setParent(NULL);
+		}
+
 		$this->children = new \SplObjectStorage();
 
 		foreach ($roles as $child) {
 			if ($child instanceof IRole) {
 				$this->children->attach($child);
+				$child->setParent($this);
 			}
 		}
 	}
@@ -113,6 +120,7 @@ class Role implements IRole
 	{
 		if (!$this->children->contains($role)) {
 			$this->children->attach($role);
+			$role->setParent($this);
 		}
 	}
 
@@ -121,7 +129,17 @@ class Role implements IRole
 	 */
 	public function getChildren() : array
 	{
-		return $this->children;
+		$children = [];
+
+		$this->children->rewind();
+
+		while ($this->children->valid())
+		{
+			$children[] = $this->children->current();
+			$this->children->next();
+		}
+
+		return $children;
 	}
 
 	/**
@@ -193,7 +211,17 @@ class Role implements IRole
 	 */
 	public function getPermissions() : array
 	{
-		return $this->permissions;
+		$permissions = [];
+
+		$this->permissions->rewind();
+
+		while ($this->permissions->valid())
+		{
+			$permissions[] = $this->permissions->current();
+			$this->permissions->next();
+		}
+
+		return $permissions;
 	}
 
 	/**

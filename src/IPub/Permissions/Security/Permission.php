@@ -60,10 +60,7 @@ class Permission extends NS\Permission implements NS\IAuthorizator
 
 		// Register all available roles
 		foreach ($roles as $role) {
-			$roleParent = $role->getParent();
-
-			// Assign role to application permission checker
-			$this->addRole($role->getRoleId(), $roleParent ? $roleParent->getRoleId() : NULL);
+			$this->checkAndAddRole($role);
 
 			// Allow all privileges for administrator
 			if ($role->isAdministrator()) {
@@ -78,6 +75,25 @@ class Permission extends NS\Permission implements NS\IAuthorizator
 					$this->allow($role->getRoleId(), $resource, $permission->getPrivilege(), $permission->getAssertion());
 				}
 			}
+		}
+	}
+
+	/**
+	 * @param Entities\IRole $role
+	 *
+	 * @return void
+	 */
+	private function checkAndAddRole(Entities\IRole $role)
+	{
+		$roleParent = $role->getParent();
+
+		if ($roleParent) {
+			$this->checkAndAddRole($roleParent);
+		}
+
+		// Assign role to application permission checker
+		if (!$this->hasRole($role->getRoleId())) {
+			$this->addRole($role->getRoleId(), $roleParent ? $roleParent->getRoleId() : NULL);
 		}
 	}
 }

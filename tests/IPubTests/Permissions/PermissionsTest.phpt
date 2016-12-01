@@ -3,15 +3,17 @@
  * Test: IPub\Permissions\Permissions
  * @testCase
  *
- * @copyright	More in license.md
- * @license		http://www.ipublikuj.eu
- * @author		Adam Kadlec http://www.ipublikuj.eu
- * @package		iPublikuj:Permissions!
- * @subpackage	Tests
- * @since		5.0
+ * @copyright      More in license.md
+ * @license        http://www.ipublikuj.eu
+ * @author         Adam Kadlec http://www.ipublikuj.eu
+ * @package        iPublikuj:Permissions!
+ * @subpackage     Tests
+ * @since          1.0.0
  *
- * @date		14.01.15
+ * @date           14.01.15
  */
+
+declare(strict_types = 1);
 
 namespace IPubTests\Permissions;
 
@@ -23,119 +25,75 @@ use Tester\Assert;
 use IPub;
 use IPub\Permissions;
 
-require __DIR__ . '/../bootstrap.php';
-require __DIR__ . '/RolesModel.php';
+require __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'bootstrap.php';
+
+require __DIR__ . DS . 'libs' . DS . 'ResourcesProvider.php';
+require __DIR__ . DS . 'libs' . DS . 'PermissionsProvider.php';
+require __DIR__ . DS . 'libs' . DS . 'RolesProvider.php';
+
+require __DIR__ . DS . 'libs' . DS . 'DummyExtensionOne.php';
+require __DIR__ . DS . 'libs' . DS . 'DummyExtensionTwo.php';
+require __DIR__ . DS . 'libs' . DS . 'DummyExtensionThree.php';
 
 class PermissionsTest extends Tester\TestCase
 {
 	/**
-	 * @var Permissions\Providers\IRolesProvider
-	 */
-	private $rolesModel;
-
-	/**
-	 * @var Permissions\Security\Permission
-	 */
-	private $permission;
-
-	/**
 	 * @return array[]|array
 	 */
-	public function dataValidPermissions()
+	public function dataExtensionsWithInvalidPermissions()
 	{
 		return [
-			['firstResourceName:firstPrivilegeName', [
-				'title'			=> 'This is example title',
-				'description'	=> 'This is example description'
-			]],
-			[(new Permissions\Entities\Permission('secondResource', 'secondPrivilege', [
-					'title'			=> 'This is second example title',
-					'description'	=> 'This is second example description'
-				])), NULL
-			],
-			[
-				[
-					'resource'	=> 'thirdResourceName',
-					'privilege'	=> 'thirdPrivilegeName'
-				]
-			]
+			['DummyExtensionTwo'],
+			['DummyExtensionThree'],
 		];
 	}
 
-	/**
-	 * @return array[]|array
-	 */
-	public function dataInvalidPermissions()
+	public function testRegisteringPermissions()
 	{
-		return [
-			['wrongStringVersion', [
-				'title'			=> 'This is example title',
-				'description'	=> 'This is example description'
-			]],
-			[
-				[
-					'resource'	=> 'thirdResourceName',
-					'wrongKey'	=> 'thirdPrivilegeName'
-				]
-			]
-		];
+		$config = $this->initializeContainer();
+
+		\IPubTests\Permissions\Libs\DummyExtensionOne::register($config);
+
+		$dic = $config->createContainer();
+
+		/** @var Permissions\Providers\IPermissionsProvider $permissions */
+		$permissionsProvider = $dic->getByType(Permissions\Providers\IPermissionsProvider::class);
+		/** @var Permissions\Providers\IResourcesProvider $resourcesProvider */
+		$resourcesProvider = $dic->getByType(Permissions\Providers\IResourcesProvider::class);
+
+		Assert::count(6, $permissionsProvider->findAll());
+		Assert::count(6, $resourcesProvider->findAll());
 	}
 
 	/**
-	 * Set up
-	 */
-	public function setUp()
-	{
-		parent::setUp();
-
-		$dic = $this->createContainer();
-
-		// Get roles model services
-		$this->rolesModel = $dic->getService('models.roles');
-
-		// Get permissions service
-		$this->permission = $dic->getService('permissions.permissions');
-	}
-
-	/**
-	 * @dataProvider dataValidPermissions
+	 * @dataProvider dataExtensionsWithInvalidPermissions
 	 *
-	 * @param mixed|NULL $permission
-	 * @param array|NULL $details
-	 */
-	public function testRegisteringPermissions($permission, array $details = NULL)
-	{
-		$obj = $this->permission->addPermission($permission, $details);
-
-		Assert::true($obj instanceof IPub\Permissions\Security\Permission);
-	}
-
-	/**
-	 * @dataProvider dataInvalidPermissions
-	 *
-	 * @param mixed|NULL $permission
-	 * @param array|NULL $details
+	 * @param string $extensionName
 	 *
 	 * @throws IPub\Permissions\Exceptions\InvalidArgumentException
 	 */
-	public function testRegisteringInvalidPermissions($permission, array $details = NULL)
+	public function testRegisteringInvalidPermissions(string $extensionName)
 	{
-		$this->permission->addPermission($permission, $details);
+		$config = $this->initializeContainer();
+
+		eval('\IPubTests\Permissions\Libs\\' . $extensionName . '::register($config);');
+
+		$config->createContainer();
 	}
 
 	/**
-	 * @return \SystemContainer|\Nette\DI\Container
+	 * @return Nette\Configurator
 	 */
-	protected function createContainer()
+	private function initializeContainer() : Nette\Configurator
 	{
 		$config = new Nette\Configurator();
 		$config->setTempDirectory(TEMP_DIR);
 
 		Permissions\DI\PermissionsExtension::register($config);
 
-		$config->addConfig(__DIR__ . '/files/config.neon', $config::NONE);
+		$config->addConfig(__DIR__ . DS . 'files' . DS . 'config.neon');
 
-		return $config->createContainer();
+		return $config;
 	}
 }
 

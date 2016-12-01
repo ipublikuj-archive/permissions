@@ -1,4 +1,10 @@
+permissions:
+	providers:
+		roles: FALSE
+		permissions: \IPubTests\Permissions\Libs\PermissionsProvider
+		resources: \IPubTests\Permissions\Libs\ResourcesProvider
+
 services:
-	# Default roles model
-	models.roles:
-		class: IPubTests\Permissions\RolesProvider
+	# Default roles provider
+	providers.roles:
+		class: IPubTests\Permissions\Libs\RolesProvider

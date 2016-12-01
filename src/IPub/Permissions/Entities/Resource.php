@@ -102,7 +102,17 @@ class Resource implements IResource
 	 */
 	public function getChildren()
 	{
-		return $this->children;
+		$children = [];
+
+		$this->children->rewind();
+
+		while ($this->children->valid())
+		{
+			$children[] = $this->children->current();
+			$this->children->next();
+		}
+
+		return $children;
 	}
 
 	/**

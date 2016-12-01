@@ -1,7 +1,6 @@
-nette:
-	application:
-		mapping:
-			*: IPubTests\Permissions\*Presenter
+application:
+	mapping:
+		*: IPubTests\Permissions\*Presenter
 
 services:
 	# Test presenter

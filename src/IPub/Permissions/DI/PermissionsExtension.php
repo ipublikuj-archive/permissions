@@ -182,23 +182,7 @@ final class PermissionsExtension extends DI\CompilerExtension
 		DI\ServiceDefinition $permissionsProvider = NULL
 	) {
 		foreach ($permissions as $permission => $details) {
-			if (is_array($permission)) {
-				if (!isset($permission['resource']) || !isset($permission['privilege'])) {
-					throw new Exceptions\InvalidArgumentException('Permission must include resource & privilege.');
-				}
-
-				// Remove white spaces
-				$resource = Utils\Strings::trim($permission['resource']);
-				$privilege = Utils\Strings::trim($permission['privilege']);
-
-				$resource = new Entities\Resource($resource);
-
-			} elseif ($permission instanceof Entities\IPermission) {
-				$resource = $permission->getResource();
-				$privilege = $permission->getPrivilege();
-
-			// Resource & privilege is in string with delimiter
-			} elseif (is_string($permission) && Utils\Strings::contains($permission, Entities\IPermission::DELIMITER)) {
+			if (is_string($permission) && Utils\Strings::contains($permission, Entities\IPermission::DELIMITER)) {
 				// Parse resource & privilege from permission
 				list($resource, $privilege) = explode(Entities\IPermission::DELIMITER, $permission);
 
@@ -208,6 +192,26 @@ final class PermissionsExtension extends DI\CompilerExtension
 
 				$resource = new Entities\Resource($resource);
 
+			} elseif (is_array($details)) {
+				if (!isset($details['resource']) || !isset($details['privilege'])) {
+					throw new Exceptions\InvalidArgumentException('Permission must include resource & privilege.');
+				}
+
+				// Remove white spaces
+				$resource = Utils\Strings::trim($details['resource']);
+				$privilege = Utils\Strings::trim($details['privilege']);
+
+				$resource = new Entities\Resource($resource);
+
+				$details = NULL;
+
+			} elseif ($details instanceof Entities\IPermission) {
+				$resource = $details->getResource();
+				$privilege = $details->getPrivilege();
+
+				$details = NULL;
+
+			// Resource & privilege is in string with delimiter
 			} else {
 				throw new Exceptions\InvalidArgumentException(sprintf('Permission must be only string with delimiter, array with resource & privilege or instance of IPub\Permissions\Entities\IPermission, %s given', gettype($permission)));
 			}
