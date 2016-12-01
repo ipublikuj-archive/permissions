@@ -25,13 +25,8 @@ use Nette\Application;
  *
  * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
-class Configuration
+class Configuration extends Nette\Object
 {
-	/**
-	 * Implement nette smart magic
-	 */
-	use Nette\SmartObject;
-
 	/**
 	 * @var string|NULL
 	 */

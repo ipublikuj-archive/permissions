@@ -22,13 +22,8 @@ use Nette\Utils;
 use IPub;
 use IPub\Permissions\Security;
 
-class Permission implements IPermission
+class Permission extends Nette\Object implements IPermission
 {
-	/**
-	 * Implement nette smart magic
-	 */
-	use Nette\SmartObject;
-
 	/**
 	 * Permission resource
 	 *

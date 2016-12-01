@@ -30,13 +30,8 @@ use IPub\Permissions\Exceptions;
  *
  * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
-class ResourcesProvider implements IResourcesProvider
+class ResourcesProvider extends Nette\Object implements IResourcesProvider
 {
-	/**
-	 * Implement nette smart magic
-	 */
-	use Nette\SmartObject;
-
 	/**
 	 * @var Entities\IResource[]
 	 */
