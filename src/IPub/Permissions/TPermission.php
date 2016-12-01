@@ -71,16 +71,12 @@ trait TPermission
 			}
 
 		} catch (Application\ForbiddenRequestException $ex) {
-			/*
 			if ($redirectUrl) {
 				$this->getPresenter()->redirectUrl($redirectUrl);
 
 			} else {
-			*/
 				throw $ex;
-			/*
 			}
-			*/
 		}
 	}
 }

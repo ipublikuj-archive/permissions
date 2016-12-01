@@ -56,7 +56,7 @@ final class AnnotationChecker extends Nette\Object implements IChecker, ICheckRe
 	{
 		// Check annotations only if element have to be secured
 		if (
-			($element instanceof UI\ComponentReflection || $element instanceof UI\MethodReflection)
+			$element instanceof \Reflector
 			&& $element->hasAnnotation('Secured')
 		) {
 			return $this->checkUser($element)
@@ -117,13 +117,13 @@ final class AnnotationChecker extends Nette\Object implements IChecker, ICheckRe
 	{
 		// Check if element has @Security\Resource annotation & @Secured\Privilege annotation
 		if ($element->hasAnnotation('Secured\Resource')) {
-			$resources = UI\ComponentReflection::parseAnnotation($element, 'Secured\Resource');
+			$resources = $this->getElementAttribute($element, 'Secured\Resource');
 
 			if (count($resources) != 1) {
 				throw new Exceptions\InvalidStateException('Invalid resources count in @Security\Resource annotation!');
 			}
 
-			$privileges = UI\ComponentReflection::parseAnnotation($element, 'Secured\Privilege');
+			$privileges = $this->getElementAttribute($element, 'Secured\Privilege');
 
 			foreach ($resources as $resource) {
 				if ($privileges !== FALSE) {
@@ -157,7 +157,7 @@ final class AnnotationChecker extends Nette\Object implements IChecker, ICheckRe
 	{
 		// Check if element has @Secured\Privilege annotation & hasn't @Secured\Resource annotation
 		if (!$element->hasAnnotation('Secured\Resource') && $element->hasAnnotation('Secured\Privilege')) {
-			$privileges = UI\ComponentReflection::parseAnnotation($element, 'Secured\Privilege');
+			$privileges = $this->getElementAttribute($element, 'Secured\Privilege');
 
 			if (count($privileges) != 1) {
 				throw new Exceptions\InvalidStateException('Invalid privileges count in @Security\Privilege annotation!');
@@ -189,7 +189,7 @@ final class AnnotationChecker extends Nette\Object implements IChecker, ICheckRe
 	{
 		// Check if element has @Secured\Permission annotation
 		if ($element->hasAnnotation('Secured\Permission')) {
-			$permissions = UI\ComponentReflection::parseAnnotation($element, 'Secured\Permission');
+			$permissions = $this->getElementAttribute($element, 'Secured\Permission');
 
 			foreach ($permissions as $permission) {
 				// Check if parameters are defined
@@ -224,7 +224,7 @@ final class AnnotationChecker extends Nette\Object implements IChecker, ICheckRe
 	{
 		// Check if element has @Secured\Role annotation
 		if ($element->hasAnnotation('Secured\Role')) {
-			$roles = UI\ComponentReflection::parseAnnotation($element, 'Secured\Role');
+			$roles = $this->getElementAttribute($element, 'Secured\Role');
 
 			foreach ($roles as $role) {
 				// Check if role name is defined
@@ -241,5 +241,22 @@ final class AnnotationChecker extends Nette\Object implements IChecker, ICheckRe
 		}
 
 		return TRUE;
+	}
+
+	/**
+	 * @param \Reflector|UI\ComponentReflection|UI\MethodReflection $element
+	 * @param string $attribute
+	 *
+	 * @return array|FALSE
+	 */
+	private function getElementAttribute($element, string $attribute)
+	{
+		if (class_exists(UI\ComponentReflection::class)) {
+			return UI\ComponentReflection::parseAnnotation($element, $attribute);
+		}
+
+		$values = (array) $element->getAnnotation($attribute);
+
+		return is_array($values) ? $values : ($values ? [$values] : FALSE);
 	}
 }
