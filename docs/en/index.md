@@ -241,6 +241,10 @@ class YourSuperCoolModule extends Nette\DI\CompilerExtension implements IPub\Per
 
 So as you can see, there is special method **getPermissions** and this method only return an array of all permission which you want to register. Extension will parse this values and register all resources and permissions automatically.
 
+#### Creating roles
+
+Roles have to be registered like in manual registration. Automatic part is not implemented yet.
+
 ## Usage
 
 Library provide a PHP trait, which enables pleasant quering Nette ACL system you've just configured. Please note that traits are available from PHP 5.4, for older versions of PHP you must copy/paste trait contents. This trait is effective only in 
