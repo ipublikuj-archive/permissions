@@ -1,20 +1,10 @@
-# Permissions
+# Quickstart
 
 Simple permission checker for [Nette Framework](http://nette.org/)
 
 ## Installation
 
 The best way to install ipub/permissions is using  [Composer](http://getcomposer.org/):
-
-```json
-{
-	"require": {
-		"ipub/permissions": "dev-master"
-	}
-}
-```
-
-or
 
 ```sh
 $ composer require ipub/permissions:@dev
@@ -40,7 +30,47 @@ class BasePresenter extends Nette\Application\UI\Presenter
 }
 ```
 
-## Initialisation
+## About ACL in Nette
+
+Nette ACL system brings some terminology you should know before continuing. First there are resources that one (a role) wants to access (privilege). This forms a permission.
+Example is the best teacher:
+
+**resources** - We can imagine them as a places where user can go. Eg. intranet, salesModule, ordersModule, etc.
+
+**privileges** - We can image them as actions what user can do. Eg. access, create, delete
+
+**permission** - Is combination of *resource* and *privilege*. So you are defining what you are able to do on current place. Eg. *intranet:access* mean that with this permission you can access the intranet part.
+
+**roles** - Are some groups where user could be assigned and therefore have defined rights. Eg. administrator, guest, authenticated, employee, sales, manager
+
+*resources* and *roles* can inherit from each other and create hierarchies:
+
+**Resources**
+```
+    intranet
+    ├ salesModule
+    └ ordersModule
+      └ invoices
+      └ products
+```
+
+**Roles(Permissions)**
+```
+    administrator(all:all)
+    guest(none:none)
+    └ authenticated(customerArea:all)
+      └ employee(intranet:all)
+        ├ sales(salesModule:all, ordersModule:read)
+        └ manager(ordersModule:all)
+          └ shop-owner(invoices:all, products:all)
+```
+
+If there is a permission (combination of `resource`, `role` and `privilege`) registered, this inherits down, in our little example `employee` can `access` the `customerArea` because is inheriting this permission from `authenticated`. Role `manager` 
+can access `ordersModule`, `intranet` and `customerArea` because is inheriting this permission from `employee` and `authenticated`.
+
+More on this can be found in [access control](https://doc.nette.org/en/2.3/access-control) chapter of [Nette Framework](http://nette.org/) [documentation](http://doc.nette.org/).
+
+## Configuration
 
 ### Creating roles
 
