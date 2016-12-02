@@ -19,6 +19,7 @@ namespace IPub\Permissions\DI;
 use Nette;
 use Nette\DI;
 use Nette\PhpGenerator as Code;
+use Nette\Security as NS;
 use Nette\Utils;
 
 use IPub;
@@ -215,6 +216,8 @@ final class PermissionsExtension extends DI\CompilerExtension
 			} else {
 				throw new Exceptions\InvalidArgumentException(sprintf('Permission must be only string with delimiter, array with resource & privilege or instance of IPub\Permissions\Entities\IPermission, %s given', gettype($permission)));
 			}
+
+			$privilege = $privilege === '' ? NS\IAuthorizator::ALL : $privilege;
 
 			// Assign permission to service
 			$permissionsProvider->addSetup('addPermission', [$resource, $privilege, $details]);
