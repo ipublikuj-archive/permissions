@@ -14,7 +14,7 @@ After that you have to register extension in config.neon.
 
 ```neon
 extensions:
-	permission: IPub\Permissions\DI\PermissionsExtension
+	permissions: IPub\Permissions\DI\PermissionsExtension
 ```
 
 Package contains trait, which you will have to use in presenter to override default **checkRequirements** method. This works only for PHP 5.4+, for older version you can simply copy trait content and paste it into class where you want to use it.
@@ -112,12 +112,12 @@ class MyPermissionsProvider extends \IPub\Permissions\Providers\PermissionsProvi
     {
         // Registering permissions
         $this->addPermission($resourcesProvider->getResource('customerArea'), \Nette\Security\IAuhtorizator::ALL);
-        $this->addPermission($resourcesProvider->getResource('intranet'), \Nette\Security\IAuhtorizator::ALL');
-        $this->addPermission($resourcesProvider->getResource('salesModule'), \Nette\Security\IAuhtorizator::ALL');
-        $this->addPermission($resourcesProvider->getResource('ordersModule'), \Nette\Security\IAuhtorizator::ALL');
+        $this->addPermission($resourcesProvider->getResource('intranet'), \Nette\Security\IAuhtorizator::ALL);
+        $this->addPermission($resourcesProvider->getResource('salesModule'), \Nette\Security\IAuhtorizator::ALL);
+        $this->addPermission($resourcesProvider->getResource('ordersModule'), \Nette\Security\IAuhtorizator::ALL);
         $this->addPermission($resourcesProvider->getResource('ordersModule'), 'read');
-        $this->addPermission($resourcesProvider->getResource('invoices'), \Nette\Security\IAuhtorizator::ALL');
-        $this->addPermission($resourcesProvider->getResource('products'), \Nette\Security\IAuhtorizator::ALL', function($acl, $role, $resource, $privilege) {
+        $this->addPermission($resourcesProvider->getResource('invoices'), \Nette\Security\IAuhtorizator::ALL);
+        $this->addPermission($resourcesProvider->getResource('products'), \Nette\Security\IAuhtorizator::ALL, function($acl, $role, $resource, $privilege) {
             // ...code of permission assertion
         });
 
