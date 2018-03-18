@@ -20,7 +20,6 @@ namespace IPubTests\Permissions\Libs;
 use Nette;
 use Nette\DI;
 
-use IPub;
 use IPub\Permissions;
 
 class DummyExtensionTwo extends DI\CompilerExtension implements Permissions\DI\IPermissionsProvider

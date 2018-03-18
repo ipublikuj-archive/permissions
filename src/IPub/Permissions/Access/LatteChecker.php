@@ -20,7 +20,6 @@ use Nette;
 use Nette\Utils;
 use Nette\Security as NS;
 
-use IPub;
 use IPub\Permissions\Entities;
 use IPub\Permissions\Exceptions;
 

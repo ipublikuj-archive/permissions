@@ -17,10 +17,6 @@ declare(strict_types = 1);
 
 namespace IPubTests\Permissions\Libs;
 
-use Nette;
-
-use IPub;
-use IPub\Permissions;
 use IPub\Permissions\Entities;
 use IPub\Permissions\Providers;
 

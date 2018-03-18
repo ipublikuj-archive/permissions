@@ -18,7 +18,6 @@ namespace IPub\Permissions\Entities;
 
 use Nette;
 
-use IPub;
 use IPub\Permissions\Exceptions;
 
 class Role implements IRole

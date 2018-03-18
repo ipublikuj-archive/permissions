@@ -17,8 +17,6 @@ declare(strict_types = 1);
 
 namespace IPubTests\Permissions\Libs;
 
-use IPub;
-use IPub\Permissions;
 use IPub\Permissions\Providers;
 
 class ResourcesProvider extends Providers\ResourcesProvider
