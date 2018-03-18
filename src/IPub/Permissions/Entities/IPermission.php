@@ -3,8 +3,8 @@
  * IPermission.php
  *
  * @copyright      More in license.md
- * @license        http://www.ipublikuj.eu
- * @author         Adam Kadlec http://www.ipublikuj.eu
+ * @license        https://www.ipublikuj.eu
+ * @author         Adam Kadlec https://www.ipublikuj.eu
  * @package        iPublikuj:Permissions!
  * @subpackage     Entities
  * @since          1.0.0
@@ -23,28 +23,28 @@ interface IPermission
 	 *
 	 * @var string
 	 */
-	const DELIMITER = ':';
+	public const DELIMITER = ':';
 
 	/**
 	 * Get permission resource
 	 *
 	 * @return IResource|NULL
 	 */
-	function getResource();
+	function getResource() : ?IResource;
 
 	/**
 	 * Get permission privilege
 	 *
 	 * @return string
 	 */
-	function getPrivilege();
+	function getPrivilege() : string;
 
 	/**
 	 * Get permission assertion callback
 	 * 
 	 * @return callable|NULL
 	 */
-	public function getAssertion();
+	public function getAssertion() : ?callable;
 
 	/**
 	 * Set permission details like title, description, etc.
@@ -53,19 +53,19 @@ interface IPermission
 	 * 
 	 * @return void
 	 */
-	function setDetails(array $details);
+	function setDetails(array $details) : void;
 
 	/**
 	 * Get permission title
 	 *
-	 * @return string|null
+	 * @return string|NULL
 	 */
-	function getTitle();
+	function getTitle() : ?string;
 
 	/**
 	 * Get permission title
 	 *
-	 * @return string|null
+	 * @return string|NULL
 	 */
-	function getDescription();
+	function getDescription() : ?string;
 }

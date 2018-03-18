@@ -3,14 +3,16 @@
  * Configuration.php
  *
  * @copyright      More in license.md
- * @license        http://www.ipublikuj.eu
- * @author         Adam Kadlec http://www.ipublikuj.eu
+ * @license        https://www.ipublikuj.eu
+ * @author         Adam Kadlec https://www.ipublikuj.eu
  * @package        iPublikuj:Permissions!
  * @subpackage     common
  * @since          2.0.0
  *
  * @date           17.02.15
  */
+
+declare(strict_types = 1);
 
 namespace IPub\Permissions;
 
@@ -25,8 +27,13 @@ use Nette\Application;
  *
  * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
-class Configuration extends Nette\Object
+class Configuration
 {
+	/**
+	 * Implement nette smart magic
+	 */
+	use Nette\SmartObject;
+
 	/**
 	 * @var string|NULL
 	 */
@@ -41,7 +48,7 @@ class Configuration extends Nette\Object
 	 * @param string|NULL $redirectUrl
 	 * @param Application\LinkGenerator $linkGenerator
 	 */
-	public function __construct(string $redirectUrl = NULL, Application\LinkGenerator $linkGenerator)
+	public function __construct(?string $redirectUrl = NULL, Application\LinkGenerator $linkGenerator)
 	{
 		$this->redirectUrl = $redirectUrl;
 		$this->linkGenerator = $linkGenerator;
@@ -56,7 +63,7 @@ class Configuration extends Nette\Object
 	 *
 	 * @throws Application\UI\InvalidLinkException
 	 */
-	public function getRedirectUrl(array $params = [])
+	public function getRedirectUrl(array $params = []) : ?string
 	{
 		if ($this->redirectUrl) {
 			return $this->linkGenerator->link($this->redirectUrl, $params);

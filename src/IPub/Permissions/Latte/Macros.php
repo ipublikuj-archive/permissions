@@ -3,8 +3,8 @@
  * Macros.php
  *
  * @copyright      More in license.md
- * @license        http://www.ipublikuj.eu
- * @author         Adam Kadlec http://www.ipublikuj.eu
+ * @license        https://www.ipublikuj.eu
+ * @author         Adam Kadlec https://www.ipublikuj.eu
  * @package        iPublikuj:Permissions!
  * @subpackage     Latte
  * @since          1.0.0
@@ -40,7 +40,7 @@ final class Macros extends MacroSet
 	 * 
 	 * @return void
 	 */
-	public static function install(Compiler $compiler)
+	public static function install(Compiler $compiler) : void
 	{
 		$me = new static($compiler);
 

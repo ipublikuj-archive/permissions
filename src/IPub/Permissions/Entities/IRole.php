@@ -3,8 +3,8 @@
  * IRole.php
  *
  * @copyright      More in license.md
- * @license        http://www.ipublikuj.eu
- * @author         Adam Kadlec http://www.ipublikuj.eu
+ * @license        https://www.ipublikuj.eu
+ * @author         Adam Kadlec https://www.ipublikuj.eu
  * @package        iPublikuj:Permissions!
  * @subpackage     Entities
  * @since          1.0.0
@@ -26,76 +26,76 @@ interface IRole extends NS\IRole
 	 *
 	 * @var string
 	 */
-	const ROLE_ANONYMOUS = 'guest';
+	public const ROLE_ANONYMOUS = 'guest';
 
 	/**
 	 * The identifier of the authenticated role
 	 *
 	 * @var string
 	 */
-	const ROLE_AUTHENTICATED = 'authenticated';
+	public const ROLE_AUTHENTICATED = 'authenticated';
 
 	/**
 	 * The identifier of the administrator role
 	 *
 	 * @var string
 	 */
-	const ROLE_ADMINISTRATOR = 'administrator';
+	public const ROLE_ADMINISTRATOR = 'administrator';
 
 	/**
-	 * @param IRole $parent
+	 * @param IRole|NULL $parent
 	 *
 	 * @return void
 	 */
-	function setParent(IRole $parent = NULL);
+	function setParent(?IRole $parent = NULL) : void;
 
 	/**
-	 * @return IRole
+	 * @return IRole|NULL
 	 */
-	function getParent();
+	function getParent() : ?IRole;
 
 	/**
 	 * @param IRole[] $roles
 	 *
 	 * @return void
 	 */
-	function setChildren(array $roles);
+	function setChildren(array $roles) : void;
 
 	/**
 	 * @param IRole $role
 	 *
 	 * @return void
 	 */
-	function addChild(IRole $role);
+	function addChild(IRole $role) : void;
 
 	/**
 	 * @return IRole[]
 	 */
-	function getChildren();
+	function getChildren() : array;
 
 	/**
 	 * @param string $name
 	 *
 	 * @return void
 	 */
-	function setName(string $name);
+	function setName(string $name) : void;
 
 	/**
 	 * @return string|NULL
 	 */
-	function getName();
+	function getName() : ?string;
 
 	/**
 	 * @param string $comment
 	 *
 	 * @return void
 	 */
-	function setComment(string $comment);
+	function setComment(string $comment) : void;
 
 	/**
 	 * @return string|NULL
 	 */
-	function getComment();
+	function getComment() : ?string;
 
 	/**
 	 * Add one permission to role
@@ -104,7 +104,7 @@ interface IRole extends NS\IRole
 	 *
 	 * @return void
 	 */
-	function setPermissions(array $permissions);
+	function setPermissions(array $permissions) : void;
 
 	/**
 	 * Adds a permission
@@ -113,7 +113,7 @@ interface IRole extends NS\IRole
 	 *
 	 * @return void
 	 */
-	function addPermission(IPermission $permission);
+	function addPermission(IPermission $permission) : void;
 
 	/**
 	 * Returns permissions for the role
@@ -138,14 +138,14 @@ interface IRole extends NS\IRole
 	 *
 	 * @return void
 	 */
-	function removePermission(IPermission $permission);
+	function removePermission(IPermission $permission) : void;
 
 	/**
 	 * Clear all role permissions
 	 *
 	 * @return void
 	 */
-	function clearPermissions();
+	function clearPermissions() : void;
 
 	/**
 	 * Check if role is one from system roles

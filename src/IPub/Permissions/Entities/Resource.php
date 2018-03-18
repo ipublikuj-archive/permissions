@@ -3,8 +3,8 @@
  * IResource.php
  *
  * @copyright      More in license.md
- * @license        http://www.ipublikuj.eu
- * @author         Adam Kadlec http://www.ipublikuj.eu
+ * @license        https://www.ipublikuj.eu
+ * @author         Adam Kadlec https://www.ipublikuj.eu
  * @package        iPublikuj:Permissions!
  * @subpackage     Entities
  * @since          2.0.0
@@ -18,8 +18,13 @@ namespace IPub\Permissions\Entities;
 
 use Nette;
 
-class Resource extends Nette\Object implements IResource
+class Resource implements IResource
 {
+	/**
+	 * Implement nette smart magic
+	 */
+	use Nette\SmartObject;
+
 	/**
 	 * @var string
 	 */
@@ -55,7 +60,7 @@ class Resource extends Nette\Object implements IResource
 	/**
 	 * {@inheritdoc}
 	 */
-	public function setParent(IResource $parent = NULL)
+	public function setParent(IResource $parent = NULL) : void
 	{
 		$this->parent = $parent;
 	}
@@ -63,7 +68,7 @@ class Resource extends Nette\Object implements IResource
 	/**
 	 * {@inheritdoc}
 	 */
-	public function getParent()
+	public function getParent() : ?IResource
 	{
 		return $this->parent;
 	}
@@ -71,7 +76,7 @@ class Resource extends Nette\Object implements IResource
 	/**
 	 * {@inheritdoc}
 	 */
-	public function setChildren(array $resources)
+	public function setChildren(array $resources) : void
 	{
 		$this->children = new \SplObjectStorage();
 
@@ -85,7 +90,7 @@ class Resource extends Nette\Object implements IResource
 	/**
 	 * {@inheritdoc}
 	 */
-	public function addChild(IResource $resource)
+	public function addChild(IResource $resource) : void
 	{
 		if (!$this->children->contains($resource)) {
 			$this->children->attach($resource);
@@ -95,7 +100,7 @@ class Resource extends Nette\Object implements IResource
 	/**
 	 * {@inheritdoc}
 	 */
-	public function getChildren()
+	public function getChildren() : array
 	{
 		$children = [];
 
@@ -121,7 +126,7 @@ class Resource extends Nette\Object implements IResource
 	/**
 	 * {@inheritdoc}
 	 */
-	public function setName(string $name)
+	public function setName(string $name) : void
 	{
 		$this->name = $name;
 	}
@@ -129,7 +134,7 @@ class Resource extends Nette\Object implements IResource
 	/**
 	 * {@inheritdoc}
 	 */
-	public function getName()
+	public function getName() : ?string
 	{
 		return $this->name;
 	}
@@ -137,7 +142,7 @@ class Resource extends Nette\Object implements IResource
 	/**
 	 * {@inheritdoc}
 	 */
-	public function setComment(string $comment)
+	public function setComment(string $comment) : void
 	{
 		$this->comment = $comment;
 	}
@@ -145,7 +150,7 @@ class Resource extends Nette\Object implements IResource
 	/**
 	 * {@inheritdoc}
 	 */
-	public function getComment()
+	public function getComment() : ?string
 	{
 		return $this->comment;
 	}

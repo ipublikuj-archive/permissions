@@ -42,4 +42,4 @@ class BasePresenter extends Nette\Application\UI\Presenter
 Learn how to control access to your application in [documentation](https://github.com/iPublikuj/permissions/blob/master/docs/en/index.md).
 
 ***
-Homepage [http://www.ipublikuj.eu](http://www.ipublikuj.eu) and repository [http://github.com/iPublikuj/permissions](http://github.com/iPublikuj/permissions).
+Homepage [https://www.ipublikuj.eu](https://www.ipublikuj.eu) and repository [http://github.com/iPublikuj/permissions](http://github.com/iPublikuj/permissions).

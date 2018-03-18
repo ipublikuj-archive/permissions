@@ -10,7 +10,7 @@
 		{
 			"name"		: "iPublikuj:cms",
 			"email"		: "info@ipublikuj.eu",
-			"homepage"	: "http://www.ipublikuj.eu/"
+			"homepage"	: "https://www.ipublikuj.eu/"
 		}
 	],
 
@@ -19,25 +19,37 @@
 		"issues"	:"https://github.com/iPublikuj/permissions/issues"
 	},
 
+	"extra": {
+		"ipub"	: {
+			"configuration" : {
+				"extensions" : {
+					"permissions" : "IPub\\Permissions\\DI\\PermissionsExtension"
+				}
+			}
+		}
+	},
+
 	"require": {
-		"php"	: ">=7.0.0",
+		"php"	: ">=7.1.0",
 
-		"nette/application"	: "~2.3@dev",
-		"nette/di"			: "~2.3@dev",
-		"nette/utils"		: "~2.3@dev",
-		"nette/security"	: "~2.3@dev",
+		"nette/application"	: "~2.4",
+		"nette/di"			: "~2.4",
+		"nette/utils"		: "~2.4",
+		"nette/security"	: "~2.4",
 
-		"latte/latte"	: "~2.3@dev"
+		"latte/latte"	: "~2.4"
 	},
 
 	"require-dev": {
-		"nette/bootstrap"		: "~2.3@dev",
-		"nette/mail"			: "~2.3@dev",
-		"nette/safe-stream"		: "~2.3@dev",
-		"nette/robot-loader"	: "~2.3@dev",
-		"nette/tester"			: "@dev",
+		"nette/bootstrap"		: "~2.4",
+		"nette/mail"			: "~2.4",
+		"nette/robot-loader"	: "~2.4",
+		"nette/safe-stream"		: "~2.3",
+		"nette/tester"			: "~2.0",
 
-		"tracy/tracy"	: "@dev"
+		"tracy/tracy"	: "~2.4",
+
+		"pds/skeleton"	: "~1.0"
 	},
 
 	"autoload": {

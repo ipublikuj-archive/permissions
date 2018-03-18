@@ -3,8 +3,8 @@
  * PermissionsProvider.php
  *
  * @copyright      More in license.md
- * @license        http://www.ipublikuj.eu
- * @author         Adam Kadlec http://www.ipublikuj.eu
+ * @license        https://www.ipublikuj.eu
+ * @author         Adam Kadlec https://www.ipublikuj.eu
  * @package        iPublikuj:Permissions!
  * @subpackage     Providers
  * @since          2.0.0
@@ -30,8 +30,13 @@ use IPub\Permissions\Exceptions;
  *
  * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
-class PermissionsProvider extends Nette\Object implements IPermissionsProvider
+class PermissionsProvider implements IPermissionsProvider
 {
+	/**
+	 * Implement nette smart magic
+	 */
+	use Nette\SmartObject;
+
 	/**
 	 * @var Entities\IPermission[]
 	 */
@@ -45,7 +50,7 @@ class PermissionsProvider extends Nette\Object implements IPermissionsProvider
 	 *
 	 * @return Entities\IPermission
 	 */
-	public function addPermission(Entities\IResource $resource = NULL, string $privilege = NULL, array $details = NULL, callable $assertion = NULL) : Entities\IPermission
+	public function addPermission(?Entities\IResource $resource = NULL, ?string $privilege = NULL, ?array $details = NULL, ?callable $assertion = NULL) : Entities\IPermission
 	{
 		$permission = new Entities\Permission($resource, $privilege, $details, $assertion);
 

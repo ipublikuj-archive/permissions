@@ -3,8 +3,8 @@
  * IResourcesProvider.php
  *
  * @copyright      More in license.md
- * @license        http://www.ipublikuj.eu
- * @author         Adam Kadlec http://www.ipublikuj.eu
+ * @license        https://www.ipublikuj.eu
+ * @author         Adam Kadlec https://www.ipublikuj.eu
  * @package        iPublikuj:Permissions!
  * @subpackage     Providers
  * @since          2.0.0
@@ -16,8 +16,6 @@ declare(strict_types = 1);
 
 namespace IPub\Permissions\Providers;
 
-use IPub;
-use IPub\Permissions;
 use IPub\Permissions\Entities;
 
 /**

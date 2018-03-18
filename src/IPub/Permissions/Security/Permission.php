@@ -3,8 +3,8 @@
  * Permission.php
  *
  * @copyright      More in license.md
- * @license        http://www.ipublikuj.eu
- * @author         Adam Kadlec http://www.ipublikuj.eu
+ * @license        https://www.ipublikuj.eu
+ * @author         Adam Kadlec https://www.ipublikuj.eu
  * @package        iPublikuj:Permissions!
  * @subpackage     Security
  * @since          1.0.0
@@ -16,12 +16,10 @@ declare(strict_types = 1);
 
 namespace IPub\Permissions\Security;
 
-use Nette;
 use Nette\Reflection;
 use Nette\Security as NS;
 use Nette\Utils;
 
-use IPub;
 use IPub\Permissions\Access;
 use IPub\Permissions\Entities;
 use IPub\Permissions\Exceptions;
@@ -83,7 +81,7 @@ class Permission extends NS\Permission implements NS\IAuthorizator
 	 *
 	 * @return void
 	 */
-	private function checkAndAddRole(Entities\IRole $role)
+	private function checkAndAddRole(Entities\IRole $role) : void
 	{
 		$roleParent = $role->getParent();
 

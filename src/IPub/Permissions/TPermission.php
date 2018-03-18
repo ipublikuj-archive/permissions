@@ -3,8 +3,8 @@
  * TPermission.php
  *
  * @copyright      More in license.md
- * @license        http://www.ipublikuj.eu
- * @author         Adam Kadlec http://www.ipublikuj.eu
+ * @license        https://www.ipublikuj.eu
+ * @author         Adam Kadlec https://www.ipublikuj.eu
  * @package        iPublikuj:Permissions!
  * @subpackage     common
  * @since          1.0.0
@@ -12,12 +12,12 @@
  * @date           13.10.14
  */
 
+declare(strict_types = 1);
+
 namespace IPub\Permissions;
 
-use Nette;
 use Nette\Application;
 
-use IPub;
 use IPub\Permissions\Security;
 
 /**
@@ -53,11 +53,13 @@ trait TPermission
 	}
 
 	/**
-	 * @param $element
+	 * @param mixed $element
+	 *
+	 * @return void
 	 *
 	 * @throws Application\ForbiddenRequestException
 	 */
-	public function checkRequirements($element)
+	public function checkRequirements($element) : void
 	{
 		$redirectUrl = $this->permissionConfiguration->getRedirectUrl([
 			'backlink' => $this->storeRequest(),

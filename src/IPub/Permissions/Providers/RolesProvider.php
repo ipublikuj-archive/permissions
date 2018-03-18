@@ -3,8 +3,8 @@
  * RolesProvider.php
  *
  * @copyright      More in license.md
- * @license        http://www.ipublikuj.eu
- * @author         Adam Kadlec http://www.ipublikuj.eu
+ * @license        https://www.ipublikuj.eu
+ * @author         Adam Kadlec https://www.ipublikuj.eu
  * @package        iPublikuj:Permissions!
  * @subpackage     Providers
  * @since          2.0.0
@@ -30,8 +30,13 @@ use IPub\Permissions\Exceptions;
  *
  * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
-class RolesProvider extends Nette\Object implements IRolesProvider
+class RolesProvider implements IRolesProvider
 {
+	/**
+	 * Implement nette smart magic
+	 */
+	use Nette\SmartObject;
+
 	/**
 	 * @var Entities\IRole[]
 	 */
@@ -44,7 +49,7 @@ class RolesProvider extends Nette\Object implements IRolesProvider
 	 *
 	 * @return Entities\IRole
 	 */
-	public function addRole(string $id, Entities\IRole $parent = NULL, $permissions = NULL) : Entities\IRole
+	public function addRole(string $id, ?Entities\IRole $parent = NULL, $permissions = NULL) : Entities\IRole
 	{
 		if (array_key_exists($id, $this->roles)) {
 			throw new Exceptions\InvalidStateException(sprintf('Role "%s" has been already added.', $id));

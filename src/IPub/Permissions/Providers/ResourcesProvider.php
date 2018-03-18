@@ -3,8 +3,8 @@
  * RolesProvider.php
  *
  * @copyright      More in license.md
- * @license        http://www.ipublikuj.eu
- * @author         Adam Kadlec http://www.ipublikuj.eu
+ * @license        https://www.ipublikuj.eu
+ * @author         Adam Kadlec https://www.ipublikuj.eu
  * @package        iPublikuj:Permissions!
  * @subpackage     Providers
  * @since          2.0.0
@@ -30,8 +30,13 @@ use IPub\Permissions\Exceptions;
  *
  * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
-class ResourcesProvider extends Nette\Object implements IResourcesProvider
+class ResourcesProvider implements IResourcesProvider
 {
+	/**
+	 * Implement nette smart magic
+	 */
+	use Nette\SmartObject;
+
 	/**
 	 * @var Entities\IResource[]
 	 */
@@ -43,7 +48,7 @@ class ResourcesProvider extends Nette\Object implements IResourcesProvider
 	 *
 	 * @return Entities\IResource
 	 */
-	public function addResource(string $id, Entities\IResource $parent = NULL) : Entities\IResource
+	public function addResource(string $id, ?Entities\IResource $parent = NULL) : Entities\IResource
 	{
 		if (array_key_exists($id, $this->resources)) {
 			return $this->resources[$id];

@@ -3,8 +3,8 @@
  * Role.php
  *
  * @copyright      More in license.md
- * @license        http://www.ipublikuj.eu
- * @author         Adam Kadlec http://www.ipublikuj.eu
+ * @license        https://www.ipublikuj.eu
+ * @author         Adam Kadlec https://www.ipublikuj.eu
  * @package        iPublikuj:Permissions!
  * @subpackage     Entities
  * @since          1.0.0
@@ -21,8 +21,13 @@ use Nette;
 use IPub;
 use IPub\Permissions\Exceptions;
 
-class Role extends Nette\Object implements IRole
+class Role implements IRole
 {
+	/**
+	 * Implement nette smart magic
+	 */
+	use Nette\SmartObject;
+
 	/**
 	 * @var string
 	 */
@@ -58,7 +63,7 @@ class Role extends Nette\Object implements IRole
 	 * @param string|NULL $name
 	 * @param string|NULL $comment
 	 */
-	public function __construct(string $id, string $name = NULL, string $comment = NULL)
+	public function __construct(string $id, ?string $name = NULL, ?string $comment = NULL)
 	{
 		// Role identifier
 		$this->id = $id;
@@ -74,7 +79,7 @@ class Role extends Nette\Object implements IRole
 	/**
 	 * {@inheritdoc}
 	 */
-	public function setParent(IRole $parent = NULL)
+	public function setParent(IRole $parent = NULL) : void
 	{
 		$parent->addChild($this);
 
@@ -84,7 +89,7 @@ class Role extends Nette\Object implements IRole
 	/**
 	 * {@inheritdoc}
 	 */
-	public function getParent()
+	public function getParent() : ?IRole
 	{
 		return $this->parent;
 	}
@@ -92,7 +97,7 @@ class Role extends Nette\Object implements IRole
 	/**
 	 * {@inheritdoc}
 	 */
-	public function setChildren(array $roles)
+	public function setChildren(array $roles) : void
 	{
 		foreach ($this->getChildren() as $child) {
 			$child->setParent(NULL);
@@ -111,7 +116,7 @@ class Role extends Nette\Object implements IRole
 	/**
 	 * {@inheritdoc}
 	 */
-	public function addChild(IRole $role)
+	public function addChild(IRole $role) : void
 	{
 		if (!$this->children->contains($role)) {
 			$this->children->attach($role);
@@ -148,7 +153,7 @@ class Role extends Nette\Object implements IRole
 	/**
 	 * {@inheritdoc}
 	 */
-	public function setName(string $name)
+	public function setName(string $name) : void
 	{
 		$this->name = $name;
 	}
@@ -156,7 +161,7 @@ class Role extends Nette\Object implements IRole
 	/**
 	 * {@inheritdoc}
 	 */
-	public function getName()
+	public function getName() : ?string
 	{
 		return $this->name ?: $this->id;
 	}
@@ -164,7 +169,7 @@ class Role extends Nette\Object implements IRole
 	/**
 	 * {@inheritdoc}
 	 */
-	public function setComment(string $comment)
+	public function setComment(string $comment) : void
 	{
 		$this->comment = $comment;
 	}
@@ -172,7 +177,7 @@ class Role extends Nette\Object implements IRole
 	/**
 	 * {@inheritdoc}
 	 */
-	public function getComment()
+	public function getComment() : ?string
 	{
 		return $this->comment;
 	}
@@ -180,7 +185,7 @@ class Role extends Nette\Object implements IRole
 	/**
 	 * {@inheritdoc}
 	 */
-	public function setPermissions(array $permissions)
+	public function setPermissions(array $permissions) : void
 	{
 		$this->permissions = new \SplObjectStorage();
 
@@ -194,7 +199,7 @@ class Role extends Nette\Object implements IRole
 	/**
 	 * {@inheritdoc}
 	 */
-	public function addPermission(IPermission $permission)
+	public function addPermission(IPermission $permission) : void
 	{
 		if (!$this->permissions->contains($permission)) {
 			$this->permissions->attach($permission);
@@ -230,7 +235,7 @@ class Role extends Nette\Object implements IRole
 	/**
 	 * {@inheritdoc}
 	 */
-	public function removePermission(IPermission $permission)
+	public function removePermission(IPermission $permission) : void
 	{
 		if (!$this->permissions->contains($permission)) {
 			throw new Exceptions\InvalidArgumentException(sprintf('Permission "%s" cannot be removed since it is not associated with the role %s', $permission, $this->getName()));
@@ -242,7 +247,7 @@ class Role extends Nette\Object implements IRole
 	/**
 	 * {@inheritdoc}
 	 */
-	public function clearPermissions()
+	public function clearPermissions() : void
 	{
 		$this->permissions = new \SplObjectStorage();
 	}

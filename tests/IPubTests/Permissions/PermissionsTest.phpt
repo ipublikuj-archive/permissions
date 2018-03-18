@@ -4,8 +4,8 @@
  * @testCase
  *
  * @copyright      More in license.md
- * @license        http://www.ipublikuj.eu
- * @author         Adam Kadlec http://www.ipublikuj.eu
+ * @license        https://www.ipublikuj.eu
+ * @author         Adam Kadlec https://www.ipublikuj.eu
  * @package        iPublikuj:Permissions!
  * @subpackage     Tests
  * @since          1.0.0
@@ -22,7 +22,6 @@ use Nette;
 use Tester;
 use Tester\Assert;
 
-use IPub;
 use IPub\Permissions;
 
 require __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'bootstrap.php';
@@ -40,7 +39,7 @@ class PermissionsTest extends Tester\TestCase
 	/**
 	 * @return array[]|array
 	 */
-	public function dataExtensionsWithInvalidPermissions()
+	public function dataExtensionsWithInvalidPermissions() : array
 	{
 		return [
 			['DummyExtensionTwo'],
@@ -48,7 +47,7 @@ class PermissionsTest extends Tester\TestCase
 		];
 	}
 
-	public function testRegisteringPermissions()
+	public function testRegisteringPermissions() : void
 	{
 		$config = $this->initializeContainer();
 
@@ -72,7 +71,7 @@ class PermissionsTest extends Tester\TestCase
 	 *
 	 * @throws IPub\Permissions\Exceptions\InvalidArgumentException
 	 */
-	public function testRegisteringInvalidPermissions(string $extensionName)
+	public function testRegisteringInvalidPermissions(string $extensionName) : void
 	{
 		$config = $this->initializeContainer();
 

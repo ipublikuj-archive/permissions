@@ -3,8 +3,8 @@
  * PermissionsExtension.php
  *
  * @copyright      More in license.md
- * @license        http://www.ipublikuj.eu
- * @author         Adam Kadlec http://www.ipublikuj.eu
+ * @license        https://www.ipublikuj.eu
+ * @author         Adam Kadlec https://www.ipublikuj.eu
  * @package        iPublikuj:Permissions!
  * @subpackage     DI
  * @since          1.0.0
@@ -22,7 +22,6 @@ use Nette\PhpGenerator as Code;
 use Nette\Security as NS;
 use Nette\Utils;
 
-use IPub;
 use IPub\Permissions;
 use IPub\Permissions\Access;
 use IPub\Permissions\Entities;
@@ -53,7 +52,7 @@ final class PermissionsExtension extends DI\CompilerExtension
 		],
 	];
 
-	public function loadConfiguration()
+	public function loadConfiguration() : void
 	{
 		// Get container builder
 		$builder = $this->getContainerBuilder();
@@ -62,10 +61,11 @@ final class PermissionsExtension extends DI\CompilerExtension
 
 		// Application permissions
 		$builder->addDefinition($this->prefix('permissions'))
-			->setClass(Security\Permission::class);
+			->setType(Security\Permission::class);
 
 		$builder->addDefinition($this->prefix('config'))
-			->setClass(Permissions\Configuration::class, [
+			->setType(Permissions\Configuration::class)
+			->setArguments([
 				$configuration['redirectUrl'],
 			]);
 
@@ -75,29 +75,29 @@ final class PermissionsExtension extends DI\CompilerExtension
 
 		if ($configuration['providers']['roles'] === TRUE) {
 			$builder->addDefinition($this->prefix('providers.roles'))
-				->setClass(Providers\RolesProvider::class);
+				->setType(Providers\RolesProvider::class);
 
 		} elseif (is_string($configuration['providers']['roles']) && class_exists($configuration['providers']['roles'])) {
 			$builder->addDefinition($this->prefix('providers.roles'))
-				->setClass($configuration['providers']['roles']);
+				->setType($configuration['providers']['roles']);
 		}
 
 		if ($configuration['providers']['resources'] === TRUE) {
 			$builder->addDefinition($this->prefix('providers.resources'))
-				->setClass(Providers\ResourcesProvider::class);
+				->setType(Providers\ResourcesProvider::class);
 
 		} elseif (is_string($configuration['providers']['resources']) && class_exists($configuration['providers']['resources'])) {
 			$builder->addDefinition($this->prefix('providers.resources'))
-				->setClass($configuration['providers']['resources']);
+				->setType($configuration['providers']['resources']);
 		}
 
 		if ($configuration['providers']['permissions'] === TRUE) {
 			$builder->addDefinition($this->prefix('providers.permissions'))
-				->setClass(Providers\PermissionsProvider::class);
+				->setType(Providers\PermissionsProvider::class);
 
 		} elseif (is_string($configuration['providers']['permissions']) && class_exists($configuration['providers']['permissions'])) {
 			$builder->addDefinition($this->prefix('providers.permissions'))
-				->setClass($configuration['providers']['permissions']);
+				->setType($configuration['providers']['permissions']);
 		}
 
 		/**
@@ -108,22 +108,22 @@ final class PermissionsExtension extends DI\CompilerExtension
 		if ($configuration['annotation'] === TRUE) {
 			// Annotation access checkers
 			$builder->addDefinition($this->prefix('checkers.annotation'))
-				->setClass(Access\AnnotationChecker::class);
+				->setType(Access\AnnotationChecker::class);
 		}
 
 		// Latte access checker
 		$builder->addDefinition($this->prefix('checkers.latte'))
-			->setClass(Access\LatteChecker::class);
+			->setType(Access\LatteChecker::class);
 
 		// Link access checker
 		$builder->addDefinition($this->prefix('checkers.link'))
-			->setClass(Access\LinkChecker::class);
+			->setType(Access\LinkChecker::class);
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function beforeCompile()
+	public function beforeCompile() : void
 	{
 		parent::beforeCompile();
 
@@ -158,10 +158,10 @@ final class PermissionsExtension extends DI\CompilerExtension
 	/**
 	 * @param Nette\Configurator $config
 	 * @param string $extensionName
-	 * 
+	 *
 	 * @return void
 	 */
-	public static function register(Nette\Configurator $config, $extensionName = 'permissions')
+	public static function register(Nette\Configurator $config, $extensionName = 'permissions') : void
 	{
 		$config->onCompile[] = function (Nette\Configurator $config, Nette\DI\Compiler $compiler) use ($extensionName) {
 			$compiler->addExtension($extensionName, new PermissionsExtension());
@@ -181,7 +181,7 @@ final class PermissionsExtension extends DI\CompilerExtension
 		array $permissions,
 		DI\ServiceDefinition $resourcesProvider = NULL,
 		DI\ServiceDefinition $permissionsProvider = NULL
-	) {
+	) : void {
 		foreach ($permissions as $permission => $details) {
 			if (is_string($permission) && Utils\Strings::contains($permission, Entities\IPermission::DELIMITER)) {
 				// Parse resource & privilege from permission
@@ -212,7 +212,7 @@ final class PermissionsExtension extends DI\CompilerExtension
 
 				$details = NULL;
 
-			// Resource & privilege is in string with delimiter
+				// Resource & privilege is in string with delimiter
 			} else {
 				throw new Exceptions\InvalidArgumentException(sprintf('Permission must be only string with delimiter, array with resource & privilege or instance of IPub\Permissions\Entities\IPermission, %s given', gettype($permission)));
 			}

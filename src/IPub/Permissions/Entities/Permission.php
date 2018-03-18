@@ -3,8 +3,8 @@
  * Permission.php
  *
  * @copyright      More in license.md
- * @license        http://www.ipublikuj.eu
- * @author         Adam Kadlec http://www.ipublikuj.eu
+ * @license        https://www.ipublikuj.eu
+ * @author         Adam Kadlec https://www.ipublikuj.eu
  * @package        iPublikuj:Permissions!
  * @subpackage     Entities
  * @since          1.0.0
@@ -22,8 +22,13 @@ use Nette\Utils;
 use IPub;
 use IPub\Permissions\Security;
 
-class Permission extends Nette\Object implements IPermission
+class Permission implements IPermission
 {
+	/**
+	 * Implement nette smart magic
+	 */
+	use Nette\SmartObject;
+
 	/**
 	 * Permission resource
 	 *
@@ -56,7 +61,7 @@ class Permission extends Nette\Object implements IPermission
 	 * @param array $details
 	 * @param callable|NULL $assertion
 	 */
-	public function __construct(IResource $resource = NULL, string $privilege = NULL, $details = [], callable $assertion = NULL)
+	public function __construct(?IResource $resource = NULL, ?string $privilege = NULL, $details = [], ?callable $assertion = NULL)
 	{
 		$this->resource = $resource;
 		$this->privilege = $privilege;
@@ -71,7 +76,7 @@ class Permission extends Nette\Object implements IPermission
 	/**
 	 * {@inheritdoc}
 	 */
-	public function getResource()
+	public function getResource() : ?IResource
 	{
 		return $this->resource;
 	}
@@ -79,7 +84,7 @@ class Permission extends Nette\Object implements IPermission
 	/**
 	 * {@inheritdoc}
 	 */
-	public function getPrivilege()
+	public function getPrivilege() : string
 	{
 		return $this->privilege;
 	}
@@ -87,7 +92,7 @@ class Permission extends Nette\Object implements IPermission
 	/**
 	 * {@inheritdoc}
 	 */
-	public function getAssertion()
+	public function getAssertion() : ?callable
 	{
 		return $this->assertion;
 	}
@@ -95,7 +100,7 @@ class Permission extends Nette\Object implements IPermission
 	/**
 	 * {@inheritdoc}
 	 */
-	public function setDetails(array $details)
+	public function setDetails(array $details) : void
 	{
 		$this->details = Utils\ArrayHash::from($details);
 	}
@@ -103,7 +108,7 @@ class Permission extends Nette\Object implements IPermission
 	/**
 	 * {@inheritdoc}
 	 */
-	public function getTitle()
+	public function getTitle() : ?string
 	{
 		return $this->details->offsetExists('title') ? $this->details->offsetGet('title') : NULL;
 	}
@@ -111,7 +116,7 @@ class Permission extends Nette\Object implements IPermission
 	/**
 	 * {@inheritdoc}
 	 */
-	public function getDescription()
+	public function getDescription() : ?string
 	{
 		return $this->details->offsetExists('description') ? $this->details->offsetGet('description') : NULL;
 	}

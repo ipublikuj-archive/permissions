@@ -4,7 +4,7 @@
  * @testCase
  *
  * @copyright      More in license.md
- * @license        http://www.ipublikuj.eu
+ * @license        https://www.ipublikuj.eu
  * @author         Igor Hlina http://www.srigi.sk
  * @package        iPublikuj:Permissions!
  * @subpackage     Tests
@@ -13,6 +13,8 @@
  * @date           23.07.15
  */
 
+declare(strict_types = 1);
+
 namespace IPubTests\Permissions;
 
 use Nette;
@@ -20,7 +22,6 @@ use Nette;
 use Tester;
 use Tester\Assert;
 
-use IPub;
 use IPub\Permissions;
 
 require __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'bootstrap.php';
@@ -39,7 +40,7 @@ class ResourcesInheritanceTest extends Tester\TestCase
 	/**
 	 * Set up
 	 */
-	public function setUp()
+	public function setUp() : void
 	{
 		parent::setUp();
 
@@ -50,7 +51,7 @@ class ResourcesInheritanceTest extends Tester\TestCase
 	}
 
 
-	public function testResourcePermissionsInheriting()
+	public function testResourcePermissionsInheriting() : void
 	{
 		Assert::true($this->permission->isAllowed('authenticated', 'firstResource', 'firstPrivilege'),
 			'Role "authenticated" can access "firstResource:firstPrivilege"');

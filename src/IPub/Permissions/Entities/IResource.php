@@ -3,8 +3,8 @@
  * IResource.php
  *
  * @copyright      More in license.md
- * @license        http://www.ipublikuj.eu
- * @author         Adam Kadlec http://www.ipublikuj.eu
+ * @license        https://www.ipublikuj.eu
+ * @author         Adam Kadlec https://www.ipublikuj.eu
  * @package        iPublikuj:Permissions!
  * @subpackage     Entities
  * @since          2.0.0
@@ -22,57 +22,57 @@ use Nette\Security as NS;
 interface IResource extends NS\IResource
 {
 	/**
-	 * @param IResource $parent
+	 * @param IResource|NULL $parent
 	 *
 	 * @return void
 	 */
-	function setParent(IResource $parent = NULL);
+	function setParent(?IResource $parent = NULL) : void;
 
 	/**
-	 * @return IResource
+	 * @return IResource|NULL
 	 */
-	function getParent();
+	function getParent() : ?IResource;
 
 	/**
 	 * @param IResource[] $resources
 	 *
 	 * @return void
 	 */
-	function setChildren(array $resources);
+	function setChildren(array $resources) : void;
 
 	/**
 	 * @param IResource $resource
 	 *
 	 * @return void
 	 */
-	function addChild(IResource $resource);
+	function addChild(IResource $resource) : void;
 
 	/**
 	 * @return IResource[]
 	 */
-	function getChildren();
+	function getChildren() : array;
 
 	/**
 	 * @param string $name
 	 *
 	 * @return void
 	 */
-	function setName(string $name);
+	function setName(string $name) : void;
 
 	/**
 	 * @return string|NULL
 	 */
-	function getName();
+	function getName() : ?string;
 
 	/**
 	 * @param string $comment
 	 *
 	 * @return void
 	 */
-	function setComment(string $comment);
+	function setComment(string $comment) : void;
 
 	/**
 	 * @return string|NULL
 	 */
-	function getComment();
+	function getComment() : ?string;
 }

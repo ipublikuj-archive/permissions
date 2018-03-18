@@ -4,8 +4,8 @@
  * @testCase
  *
  * @copyright      More in license.md
- * @license        http://www.ipublikuj.eu
- * @author         Adam Kadlec http://www.ipublikuj.eu
+ * @license        https://www.ipublikuj.eu
+ * @author         Adam Kadlec https://www.ipublikuj.eu
  * @package        iPublikuj:Permissions!
  * @subpackage     Tests
  * @since          1.0.0
@@ -25,7 +25,6 @@ use Nette\Security as NS;
 use Tester;
 use Tester\Assert;
 
-use IPub;
 use IPub\Permissions;
 
 require __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'bootstrap.php';
@@ -71,7 +70,7 @@ class AccessTest extends Tester\TestCase
 	/**
 	 * Set up
 	 */
-	public function setUp()
+	public function setUp() : void
 	{
 		parent::setUp();
 
@@ -105,7 +104,7 @@ class AccessTest extends Tester\TestCase
 	 * @param string $username
 	 * @param string $password
 	 */
-	public function testPresenterActionAllowed(string $username, string $password)
+	public function testPresenterActionAllowed(string $username, string $password) : void
 	{
 		// Create test presenter
 		$presenter = $this->createPresenter();
@@ -131,7 +130,7 @@ class AccessTest extends Tester\TestCase
 	 * @param string $username
 	 * @param string $password
 	 */
-	public function testPresenterActionAllowedRole(string $username, string $password)
+	public function testPresenterActionAllowedRole(string $username, string $password) : void
 	{
 		// Create test presenter
 		$presenter = $this->createPresenter();
@@ -158,7 +157,7 @@ class AccessTest extends Tester\TestCase
 	 *
 	 * @throws Nette\Application\ForbiddenRequestException
 	 */
-	public function testPresenterActionNotAllowed(string $username)
+	public function testPresenterActionNotAllowed(string $username) : void
 	{
 		// Create test presenter
 		$presenter = $this->createPresenter();
@@ -177,7 +176,7 @@ class AccessTest extends Tester\TestCase
 	 *
 	 * @throws Nette\Application\ForbiddenRequestException
 	 */
-	public function testNotAllowedLoggedIn(string $username, string $password)
+	public function testNotAllowedLoggedIn(string $username, string $password) : void
 	{
 		// Create test presenter
 		$presenter = $this->createPresenter();
@@ -196,7 +195,7 @@ class AccessTest extends Tester\TestCase
 	 *
 	 * @param string $username
 	 */
-	public function testAllowedGuest(string $username)
+	public function testAllowedGuest(string $username) : void
 	{
 		$this->user->logout(TRUE);
 
@@ -251,7 +250,7 @@ class TestPresenter extends UI\Presenter
 {
 	use Permissions\TPermission;
 
-	public function renderAllowed()
+	public function renderAllowed() : void
 	{
 		$this->sendResponse(new Application\Responses\TextResponse('Passed'));
 	}
@@ -260,7 +259,7 @@ class TestPresenter extends UI\Presenter
 	 * @Secured
 	 * @Secured\Role(authenticated, administrator)
 	 */
-	public function renderAllowedRole()
+	public function renderAllowedRole() : void
 	{
 		$this->sendResponse(new Application\Responses\TextResponse('Passed'));
 	}
@@ -269,7 +268,7 @@ class TestPresenter extends UI\Presenter
 	 * @Secured
 	 * @Secured\User(guest)
 	 */
-	public function renderOnlyGuest()
+	public function renderOnlyGuest() : void
 	{
 		$this->sendResponse(new Application\Responses\TextResponse('Passed'));
 	}

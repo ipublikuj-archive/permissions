@@ -3,8 +3,8 @@
  * IPermissionsProvider.php
  *
  * @copyright      More in license.md
- * @license        http://www.ipublikuj.eu
- * @author         Adam Kadlec http://www.ipublikuj.eu
+ * @license        https://www.ipublikuj.eu
+ * @author         Adam Kadlec https://www.ipublikuj.eu
  * @package        iPublikuj:Permissions!
  * @subpackage     DI
  * @since          2.0.0
@@ -31,5 +31,5 @@ interface IResourcesProvider
 	 *
 	 * @return array
 	 */
-	function getResources();
+	function getResources() : array;
 }

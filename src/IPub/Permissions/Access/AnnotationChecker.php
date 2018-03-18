@@ -3,8 +3,8 @@
  * AnnotationChecker.php
  *
  * @copyright      More in license.md
- * @license        http://www.ipublikuj.eu
- * @author         Adam Kadlec http://www.ipublikuj.eu
+ * @license        https://www.ipublikuj.eu
+ * @author         Adam Kadlec https://www.ipublikuj.eu
  * @package        iPublikuj:Permissions!
  * @subpackage     Access
  * @since          1.0.0
@@ -21,7 +21,6 @@ use Nette\Application\UI;
 use Nette\Utils;
 use Nette\Security as NS;
 
-use IPub;
 use IPub\Permissions\Entities;
 use IPub\Permissions\Exceptions;
 use IPub\Permissions\Security;
@@ -34,8 +33,13 @@ use IPub\Permissions\Security;
  *
  * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
-final class AnnotationChecker extends Nette\Object implements IChecker, ICheckRequirements
+final class AnnotationChecker implements IChecker, ICheckRequirements
 {
+	/**
+	 * Implement nette smart magic
+	 */
+	use Nette\SmartObject;
+
 	/**
 	 * @var NS\User
 	 */

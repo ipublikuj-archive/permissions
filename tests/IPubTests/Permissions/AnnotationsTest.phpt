@@ -4,14 +4,16 @@
  * @testCase
  *
  * @copyright      More in license.md
- * @license        http://www.ipublikuj.eu
- * @author         Adam Kadlec http://www.ipublikuj.eu
+ * @license        https://www.ipublikuj.eu
+ * @author         Adam Kadlec https://www.ipublikuj.eu
  * @package        iPublikuj:Permissions!
  * @subpackage     Tests
  * @since          1.0.0
  *
  * @date           14.01.15
  */
+
+declare(strict_types = 1);
 
 namespace IPubTests\Permissions;
 
@@ -23,7 +25,6 @@ use Nette\Security as NS;
 use Tester;
 use Tester\Assert;
 
-use IPub;
 use IPub\Permissions;
 
 require __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'bootstrap.php';
@@ -69,7 +70,7 @@ class AnnotationsTest extends Tester\TestCase
 	/**
 	 * Set up
 	 */
-	public function setUp()
+	public function setUp() : void
 	{
 		parent::setUp();
 
@@ -103,7 +104,7 @@ class AnnotationsTest extends Tester\TestCase
 	 * @param string $username
 	 * @param string $password
 	 */
-	public function testCheckUser(string $username, string $password)
+	public function testCheckUser(string $username, string $password) : void
 	{
 		// Create test presenter
 		$presenter = $this->createPresenter();
@@ -129,7 +130,7 @@ class AnnotationsTest extends Tester\TestCase
 	 * @param string $username
 	 * @param string $password
 	 */
-	public function testCheckResourcePrivilege(string $username, string $password)
+	public function testCheckResourcePrivilege(string $username, string $password) : void
 	{
 		// Create test presenter
 		$presenter = $this->createPresenter();
@@ -155,7 +156,7 @@ class AnnotationsTest extends Tester\TestCase
 	 * @param string $username
 	 * @param string $password
 	 */
-	public function testCheckPermission(string $username, string $password)
+	public function testCheckPermission(string $username, string $password) : void
 	{
 		// Create test presenter
 		$presenter = $this->createPresenter();
@@ -181,7 +182,7 @@ class AnnotationsTest extends Tester\TestCase
 	 * @param string $username
 	 * @param string $password
 	 */
-	public function testCheckRole(string $username, string $password)
+	public function testCheckRole(string $username, string $password) : void
 	{
 		// Create test presenter
 		$presenter = $this->createPresenter();
@@ -239,7 +240,7 @@ class TestPresenter extends UI\Presenter
 	 * @Secured
 	 * @Secured\User(loggedIn)
 	 */
-	public function renderUser()
+	public function renderUser() : void
 	{
 		$this->sendResponse(new Application\Responses\TextResponse('Passed'));
 	}
@@ -249,7 +250,7 @@ class TestPresenter extends UI\Presenter
 	 * @Secured\Resource(firstResource)
 	 * @Secured\Privilege(firstPrivilege)
 	 */
-	public function renderResourcePrivilege()
+	public function renderResourcePrivilege() : void
 	{
 		$this->sendResponse(new Application\Responses\TextResponse('Passed'));
 	}
@@ -258,7 +259,7 @@ class TestPresenter extends UI\Presenter
 	 * @Secured
 	 * @Secured\Permission(secondResource:secondPrivilege)
 	 */
-	public function renderPermission()
+	public function renderPermission() : void
 	{
 		$this->sendResponse(new Application\Responses\TextResponse('Passed'));
 	}
@@ -267,7 +268,7 @@ class TestPresenter extends UI\Presenter
 	 * @Secured
 	 * @Secured\Role(authenticated)
 	 */
-	public function renderRole()
+	public function renderRole() : void
 	{
 		$this->sendResponse(new Application\Responses\TextResponse('Passed'));
 	}

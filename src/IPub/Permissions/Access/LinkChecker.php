@@ -3,8 +3,8 @@
  * LinkChecker.php
  *
  * @copyright      More in license.md
- * @license        http://www.ipublikuj.eu
- * @author         Adam Kadlec http://www.ipublikuj.eu
+ * @license        https://www.ipublikuj.eu
+ * @author         Adam Kadlec https://www.ipublikuj.eu
  * @package        iPublikuj:Permissions!
  * @subpackage     Access
  * @since          1.0.0
@@ -29,8 +29,13 @@ use Nette\Security as NS;
  *
  * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
-final class LinkChecker extends Nette\Object implements IChecker
+final class LinkChecker implements IChecker
 {
+	/**
+	 * Implement nette smart magic
+	 */
+	use Nette\SmartObject;
+
 	/**
 	 * @var Application\IPresenterFactory
 	 */
