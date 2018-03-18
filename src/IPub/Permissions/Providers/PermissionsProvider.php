@@ -4,7 +4,7 @@
  *
  * @copyright      More in license.md
  * @license        https://www.ipublikuj.eu
- * @author         Adam Kadlec https://www.ipublikuj.eu
+ * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  * @package        iPublikuj:Permissions!
  * @subpackage     Providers
  * @since          2.0.0
@@ -17,7 +17,6 @@ declare(strict_types = 1);
 namespace IPub\Permissions\Providers;
 
 use Nette;
-use Nette\Utils;
 
 use IPub\Permissions\Entities;
 use IPub\Permissions\Exceptions;

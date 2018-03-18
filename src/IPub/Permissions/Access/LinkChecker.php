@@ -4,7 +4,7 @@
  *
  * @copyright      More in license.md
  * @license        https://www.ipublikuj.eu
- * @author         Adam Kadlec https://www.ipublikuj.eu
+ * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  * @package        iPublikuj:Permissions!
  * @subpackage     Access
  * @since          1.0.0
@@ -19,7 +19,6 @@ namespace IPub\Permissions\Access;
 use Nette;
 use Nette\Application;
 use Nette\Application\UI;
-use Nette\Security as NS;
 
 /**
  * Create link access checker
@@ -74,6 +73,9 @@ final class LinkChecker implements IChecker
 	 * @param string $element etc "this", ":Admin:Show:default"
 	 *
 	 * @return bool
+	 *
+	 * @throws Application\InvalidPresenterException
+	 * @throws \ReflectionException
 	 */
 	public function isAllowed($element) : bool
 	{

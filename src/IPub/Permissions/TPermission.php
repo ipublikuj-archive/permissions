@@ -4,7 +4,7 @@
  *
  * @copyright      More in license.md
  * @license        https://www.ipublikuj.eu
- * @author         Adam Kadlec https://www.ipublikuj.eu
+ * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  * @package        iPublikuj:Permissions!
  * @subpackage     common
  * @since          1.0.0
@@ -17,8 +17,6 @@ declare(strict_types = 1);
 namespace IPub\Permissions;
 
 use Nette\Application;
-
-use IPub\Permissions\Security;
 
 /**
  * Helper trait
@@ -58,6 +56,7 @@ trait TPermission
 	 * @return void
 	 *
 	 * @throws Application\ForbiddenRequestException
+	 * @throws Application\UI\InvalidLinkException
 	 */
 	public function checkRequirements($element) : void
 	{

@@ -4,7 +4,7 @@
  *
  * @copyright      More in license.md
  * @license        https://www.ipublikuj.eu
- * @author         Adam Kadlec https://www.ipublikuj.eu
+ * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  * @package        iPublikuj:Permissions!
  * @subpackage     DI
  * @since          1.0.0
@@ -18,7 +18,6 @@ namespace IPub\Permissions\DI;
 
 use Nette;
 use Nette\DI;
-use Nette\PhpGenerator as Code;
 use Nette\Security as NS;
 use Nette\Utils;
 
@@ -52,6 +51,9 @@ final class PermissionsExtension extends DI\CompilerExtension
 		],
 	];
 
+	/**
+	 * @return void
+	 */
 	public function loadConfiguration() : void
 	{
 		// Get container builder

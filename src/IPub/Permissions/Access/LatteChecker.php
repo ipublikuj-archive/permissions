@@ -4,7 +4,7 @@
  *
  * @copyright      More in license.md
  * @license        https://www.ipublikuj.eu
- * @author         Adam Kadlec https://www.ipublikuj.eu
+ * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  * @package        iPublikuj:Permissions!
  * @subpackage     Access
  * @since          1.0.0
@@ -23,7 +23,6 @@ use Nette\Security as NS;
 use IPub;
 use IPub\Permissions\Entities;
 use IPub\Permissions\Exceptions;
-use IPub\Permissions\Security;
 
 /**
  * Latte helper for access checking

@@ -4,7 +4,7 @@
  *
  * @copyright      More in license.md
  * @license        https://www.ipublikuj.eu
- * @author         Adam Kadlec https://www.ipublikuj.eu
+ * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  * @package        iPublikuj:Permissions!
  * @subpackage     Entities
  * @since          1.0.0
@@ -18,9 +18,6 @@ namespace IPub\Permissions\Entities;
 
 use Nette;
 use Nette\Utils;
-
-use IPub;
-use IPub\Permissions\Security;
 
 class Permission implements IPermission
 {
