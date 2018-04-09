@@ -168,7 +168,7 @@ class Role implements IRole
 	/**
 	 * {@inheritdoc}
 	 */
-	public function setComment(string $comment) : void
+	public function setComment(?string $comment) : void
 	{
 		$this->comment = $comment;
 	}
