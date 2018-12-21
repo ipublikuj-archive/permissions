@@ -81,7 +81,7 @@ class Permission implements IPermission
 	/**
 	 * {@inheritdoc}
 	 */
-	public function getPrivilege() : string
+	public function getPrivilege() : ?string
 	{
 		return $this->privilege;
 	}
