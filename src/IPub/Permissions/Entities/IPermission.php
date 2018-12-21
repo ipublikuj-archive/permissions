@@ -35,7 +35,7 @@ interface IPermission
 	/**
 	 * Get permission privilege
 	 *
-	 * @return string
+	 * @return string|NULL
 	 */
 	function getPrivilege() : ?string;
 
