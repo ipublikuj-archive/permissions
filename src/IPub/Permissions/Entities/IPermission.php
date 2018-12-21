@@ -37,7 +37,7 @@ interface IPermission
 	 *
 	 * @return string
 	 */
-	function getPrivilege() : string;
+	function getPrivilege() : ?string;
 
 	/**
 	 * Get permission assertion callback
